@@ -1,0 +1,20 @@
+#!/bin/bash
+echo "synching git"
+git pull
+echo "preparing build"
+java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar ../../opt/play-2.1.3/framework/sbt/sbt-launch.jar -Dsbt.log.noformat=true dist
+cd dist
+echo "build done..."
+echo "copying build to deployed dir ..."
+unzip liberator-1.0-SNAPSHOT.zip
+cd liberator-1.0-SNAPSHOT/
+rsync -avzh lib/ ../../../liberator-1.0-SNAPSHOT/lib 
+cd ../../..
+cd liberator-1.0-SNAPSHOT/
+read playpid < RUNNING_PID
+echo "killing previous play PID " $playpid
+kill -9 $playpid
+rm nohup.out RUNNING_PID
+echo "starting play"
+nohup  ./start -Dhttp.port=8989 &
+
