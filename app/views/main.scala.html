@@ -1,15 +1,65 @@
-@(title: String)(content: Html)
+@(flag: Boolean)
 
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-    </head>
-    <body>
-        @content
-    </body>
+
+<html lang="en">
+<body>
+
+	<div id="loading">
+		<div>
+			<div></div>
+		    <div></div>
+		    <div></div>
+		</div>
+	</div>
+
+	<div>
+		<div id="content" class="c-login clearfix">
+
+			<div class="header">
+					<a href="index.html"><img src="@routes.Assets.at("images/logo.png")"></a>
+			</div> <!-- /header -->
+
+			<div class="breadcrumbs">
+				<i class="fa fa-key"></i> Login
+			</div>
+
+			@if(flash.contains("error")) {
+                       <p class="error" style="color:red;">
+                           @flash.get("error")
+                       </p>
+                   }
+			<div class="widget-content">
+				<form role="form" id="Formsigninajax" action='@routes.Application.doLogin' method="POST">
+                    <div class="form-group">
+                       <label for="exampleInputEmail1">Email address</label>
+                       <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                       <label for="exampleInputPassword1">Password</label>
+                       <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <ul class="sign-up-options">
+                       <button style="margin-left:-17.5%;" type="submit" class="btn btn-default login">Login</button>
+                    </ul>
+                    <div class="clearfix"></div>
+                    <div id="dispsignerror"></div>
+                 </form>
+              </div>
+              <div class="modal-footer">
+              	 <div><a href="@routes.Application.forgotPass">Forgot Password?</a></div>	
+                 <div><a href="@routes.Application.signup">Not a member? Sign up</a></div>
+              </div>
+			</div>
+			
+			
+
+			
+
+		</div> <!-- /content -->
+
+	</div> <!-- /wrapper -->
+
+</body>
 </html>

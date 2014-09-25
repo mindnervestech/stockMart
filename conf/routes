@@ -3,7 +3,29 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                           			controllers.Application.index()
+GET     /register                   			controllers.Application.signup()
+GET     /signOut                   				controllers.Application.signOut()
+GET		/forgotPass								controllers.Application.forgotPass()
+POST	/sendPassURL							controllers.Application.sendPassURL()
+GET		/changePass/:emailId					controllers.Application.changePass(emailId: String)
+POST	/changePass1/:emailId					controllers.Application.changePass1(emailId: String)	
+							
+POST    /registerUser                   		controllers.Application.registerUser()
+POST    /doLogin                   				controllers.Application.doLogin()
+GET     /home                           		controllers.Application.home()
+
+GET     /home/chat                  			controllers.Application.chat(username)
+
+POST	/changePassword							controllers.Application.changePassword()
+
+GET     /jsp/dashboard            				controllers.Application.dashboardPage()
+GET		/loadAllChats							controllers.Application.loadAllChats()
+POST	/uploadUserPic							controllers.Application.uploadUserPic()
+GET     /getUserPic/:uId               			controllers.Application.getUserPic(uId: String)
+POST	/addToWishlist							controllers.Application.addToWishlist()
+GET		/loadAllWishlist						controllers.Application.loadAllWishlist()
+PUT 	/removeFromWishlist						controllers.Application.removeFromWishlist()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

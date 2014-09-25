@@ -1,0 +1,61 @@
+<div id="content" class="clearfix">
+
+		<div class="header">
+			
+			<h1 class="page-title">My Account</h1>
+
+		</div>
+
+	<div class="wrp clearfix">
+	
+			<div class="quick-nav">
+				<ul>
+					<li ng-class="selectedTab == 1? 'qn-first active' : 'qn-first'"><a href="#/myAccount">Profile Picture</a></li>
+					<li ng-class="selectedTab == 2? 'active' : ''"><a href="#/changePass">Change Password</a></li>
+					<li ng-class="selectedTab == 0? 'active' : ''"><a href="#" onclick="return false;"><i class="fa fa-plus"></i> Add More</a></li>
+					<li ng-class="selectedTab == 0? 'active' : ''">
+						<a href="#" onclick="return false;"><i class="fa fa-envelope"></i> Messages</a>
+						<span class="badge qnav-badge blue">16</span>
+					</li>
+					<li ng-class="selectedTab == 0? 'qn-last active' : 'qn-last'"><a href="#" onclick="return false;"><i class="fa fa-bar-chart-o"></i> Check Statistics</a></li>
+				</ul>
+			</div>
+	
+	<div class="fluid">
+				<div class="widget grid6">
+					<div class="widget-header">
+						<div class="widget-title">
+							 Upload Profile Picture
+						</div>
+					</div> <!-- /widget-header -->
+				
+		<aside class="add-pic" style="width:50%;margin-right:25%;">
+			<aside class="pic-box">
+				<img class="img" style="height:18%;"
+                                     id="selectedImage"
+                                     name="post-photo2" data-ng-mouseenter="hover = true"
+                                     data-ng-mouseleave="hover = false"
+                                     tooltip-placement="bottom" data-ng-click="remove_image(0)"
+                                     data-ng-src="{{img}}" alt="">
+			</aside>
+			<aside class="pic-dtls">
+				<span class="pic-btn"> 
+					<input type="file" id="userPic" accept="image/*" data-ng-file-select="onFileSelect($files)"/>Select Picture
+				</span> 
+			</aside>
+		</aside>
+
+		<div class="comment widget-content">
+			<div style="float:left;width:100%;margin-left:44%;margin-top:2%;">
+		    	<button id="uploadUserPic" ng-click="uploadUserPic()">Upload</button>
+			</div>
+		</div> 
+	             
+		
+		</div> <!-- /widget -->
+	</div>
+	
+	</div>
+</div>
+
+	

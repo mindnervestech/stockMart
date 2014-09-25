@@ -1,8 +1,4 @@
-@(flag: Boolean)
 
-@main(flag)
-
-<html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,11 +20,6 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/jquery-ui.css")" />
 
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/style.css")" />
-
-	<!-- <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"> -->
-        
-	
 </head>
 
 	<script src="@routes.Assets.at("javascripts/prefixfree.min.js")" type="text/javascript"></script>
@@ -50,4 +41,36 @@
 		
 	<script src="@routes.Assets.at("javascripts/custom.js")" type="text/javascript"></script>
 		
-</html>
+
+
+
+			 <form class="form-horizontal searchposition" action="@routes.Application.sendPassURL" method="post">
+				<div id="content" class="c-login clearfix widget grid12">
+					<div class="widget-header">
+							<div class="widget-title">
+								<i class="fa fa-pencil"></i> Forgot Password
+							</div>
+						</div> <!-- /widget-header -->
+					
+					<div class="widget-content pad20f">
+		
+					@if(flash.contains("error")) {
+                       <p class="error" style="color:red;">
+                           @flash.get("error")
+                       </p>
+            	   	}
+            	   	
+            	   	@if(flash.contains("success")) {
+                       <p class="error" style="color:blue;">
+                           @flash.get("success")
+                       </p>
+            	   	}
+						
+						<input type="text" name="email" placeholder="Email ID">
+						<button class="btn btn-blue" type="submit">Submit</button>
+						
+					</div> <!-- /widget-content -->
+
+				</div> <!-- /widget -->
+				</form>
+			
