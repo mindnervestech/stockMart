@@ -32,7 +32,7 @@ body {line-height: 20px;}
 }
 
 .fluid { 
-	width: 50%; 
+	width: 100%; 
 	*zoom: 1; 
 	box-sizing: border-box; 
 	-webkit-box-sizing: border-box; 

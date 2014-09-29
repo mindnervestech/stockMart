@@ -21,6 +21,7 @@ POST	/changePassword							controllers.Application.changePassword()
 
 GET     /jsp/dashboard            				controllers.Application.dashboardPage()
 GET		/loadAllChats							controllers.Application.loadAllChats()
+GET		/loadAllMembers							controllers.Application.loadAllMembers()
 POST	/uploadUserPic							controllers.Application.uploadUserPic()
 GET     /getUserPic/:uId               			controllers.Application.getUserPic(uId: String)
 POST	/addToWishlist							controllers.Application.addToWishlist()

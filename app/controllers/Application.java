@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +21,8 @@ import models.Wishlist;
 import org.apache.commons.codec.binary.Base64;
 import org.codehaus.jackson.JsonNode;
 
+import play.Play;
+import play.api.Routes;
 import play.data.Form;
 import play.data.DynamicForm;
 import play.libs.Json;
@@ -253,19 +256,14 @@ public class Application extends Controller {
     public static Result getUserPic(String uId) throws IOException{
     	User user = User.find.byId(Long.parseLong(uId));
     	String userPic = user.getUserPic();
-    	if(userPic.isEmpty()){
-    		userPic = Application.getDefaultUserPic();
-    				
+    	if(userPic == null){
+    		return ok(Play.application().resourceAsStream("user.png")).as(("picture/stream"));
     	}
     	byte[] arr = decodeImage(user.getUserPic());
     	return ok(arr).as(("picture/stream"));
     }
     
-    private static String getDefaultUserPic() {
-    	File file = new File("");
-		return null;
-	}
-
+    
 	public static Result addToWishlist(){
     	User user = Application.getLocalUser(session());
     	DynamicForm form = DynamicForm.form().bindFromRequest();
@@ -287,6 +285,11 @@ public class Application extends Controller {
     	User user = Application.getLocalUser(session());
     	user.removeFromWishlist(wl);
     	return ok();
+    }
+    
+    public static Result loadAllMembers(){
+    	List<User> all = User.find.all();
+    	return ok(Json.toJson(all));
     }
   
 }

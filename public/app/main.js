@@ -22,7 +22,7 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
     			console.log($scope.allChats);
     			if($scope.allChats.length != 0){
 					for(var i=0; i<$scope.allChats.length; i++){
-						var el = $('<div class="img-comment vignette"><img id="userPic"></div><div class="comment-body"><div class="comment-info"><span id="user"></span><span style="float:right;" id="time"></span></div><span id="message"></span><hr>');
+						var el = $('<div style="float:left;"><img id="userPic" class="user-img"></div><div class="comment-body" style="float:right;width:88%;"><div class="comment-info"><span id="user"></span><span style="float:right;" id="time"></span></div><span id="message"></span></div><hr>');
 		            	var d = new Date($scope.allChats[i].messageTime);
 		            	var res = d.toString().split(" ");
 		            	$scope.mTime = res[0] + " " + res[1] + " " + res[2] + " " + res[4] + " IST " + res[3];
@@ -48,6 +48,49 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
     			
     		});
     }
+	
+	/*$scope.loadAllMembers = function(){
+		$scope.allMembers = [];
+    	$http.get('/loadAllMembers', {}
+    		).then(function(res){
+    			$scope.allMembers = res.data;
+    			//console.log($scope.allMembers);
+    			for(var i=0; i<$scope.allMembers.length; i++){
+    				var el1 = $('<div class="img-comment vignette"><img id="userImage"></div><div class="comment-body"><span id="user"></span></div><hr>')
+    	        	$("#userImage", el1).attr('src','/getUserPic/'+$scope.allMembers[i].id);
+    	        	$("#user", el1).text($scope.allMembers[i].name);
+    	        	$("#members").append(el1);
+    			}
+    		}, function(error){
+    			
+    		});
+	}*/
+	
+	$scope.showOnline = function(data){
+		console.log(data);
+		$scope.allMembers = [];
+    	$http.get('/loadAllMembers', {}
+    		).then(function(res){
+    			$("#members").html('');
+    			$scope.allMembers = res.data;
+		    	for(var i=0; i<$scope.allMembers.length; i++){
+					var el1 = $('<div style="float:left;"><img id="userImage" class="user-img"></div><div class="comment-body"><div class="comment-info" style="margin-top:-5px;margin-bottom:-5px;"><span id="user"></span></div><span id="status"></span></div><hr>')
+			       	$("#userImage", el1).attr('src','/getUserPic/'+$scope.allMembers[i].id);
+			       	$("#user", el1).text($scope.allMembers[i].name);
+				    for(var j=0; j<data.length;j++){   	
+			       		if(data[j] == $scope.allMembers[i].id){
+							$("#status", el1).text("available");
+							break;
+			       		}
+			       		$("#status", el1).text("busy");
+			    	}	
+			     	$("#members").append(el1);
+				}
+    		}, function(error){
+    			
+    		});
+	}
+	
 	
 	//$scope.allSymbols = [];
 	
