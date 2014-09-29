@@ -27,7 +27,12 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
 		            	var res = d.toString().split(" ");
 		            	$scope.mTime = res[0] + " " + res[1] + " " + res[2] + " " + res[4] + " IST " + res[3];
 		            	//console.log($scope.mTime);
-						$("#message", el).text($scope.allChats[i].message);
+		            	console.log($scope.allChats[i].type);
+		            	if($scope.allChats[i].type == "message"){
+		         	    	$("#message", el).text($scope.allChats[i].message);
+		         	    } else {
+		         	    	$("#message", el).text("Attachement");
+		         	    }
 		            	$("#user", el).text($scope.allChats[i].user);
 		            	$("#time", el).text($scope.mTime);
 		            	$("#userPic", el).attr('src','/getUserPic/'+$scope.allChats[i].userId);

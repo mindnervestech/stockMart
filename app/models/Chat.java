@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
@@ -20,8 +21,15 @@ public class Chat extends Model {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
 	
+	@Lob
 	public String message;
+	
+	@Lob
+	public String attachement;
+	
     public Date messageTime;
+    
+    public String messageType;
 	
     public Long userId;
     

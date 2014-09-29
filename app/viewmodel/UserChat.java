@@ -8,7 +8,7 @@ public class UserChat {
 	
 	public String message;
     public Date messageTime;
-	
+    public String type;
     public String user;
 
     public String userPic;

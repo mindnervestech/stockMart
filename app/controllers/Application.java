@@ -219,6 +219,7 @@ public class Application extends Controller {
     		uc.user = User.find.byId(chat.userId).name;
     		uc.userPic = User.find.byId(chat.userId).userPic;
     		uc.userId = chat.userId;
+    		uc.type = chat.messageType;
     		ucAll.add(uc);
     	}
     	Map<String, Object> map = new HashMap<String, Object>();
@@ -251,11 +252,21 @@ public class Application extends Controller {
     
     public static Result getUserPic(String uId) throws IOException{
     	User user = User.find.byId(Long.parseLong(uId));
+    	String userPic = user.getUserPic();
+    	if(userPic.isEmpty()){
+    		userPic = Application.getDefaultUserPic();
+    				
+    	}
     	byte[] arr = decodeImage(user.getUserPic());
     	return ok(arr).as(("picture/stream"));
     }
     
-    public static Result addToWishlist(){
+    private static String getDefaultUserPic() {
+    	File file = new File("");
+		return null;
+	}
+
+	public static Result addToWishlist(){
     	User user = Application.getLocalUser(session());
     	DynamicForm form = DynamicForm.form().bindFromRequest();
     	Wishlist wishlist = new Wishlist(form);

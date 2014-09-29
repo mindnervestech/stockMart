@@ -39,19 +39,22 @@ public class ChatRoom extends UntypedActor {
      * Join the default room.
      */
     public static void join(final String username, WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) throws Exception{
-        
+        System.out.println("join");
         // Send the Join message to the room
-        String result = (String)Await.result(ask(defaultRoom,new Join(username, out, "message", new Date()), 1000), Duration.create(1, SECONDS));
-        
+        String result = (String)Await.result(ask(defaultRoom, new Join(username, out, "message", new Date()), 1000), Duration.create(1, SECONDS));
+        System.out.println("result ::: "+result);
         if("OK".equals(result)) {
             
             // For each event received on the socket,
             in.onMessage(new Callback<JsonNode>() {
                public void invoke(JsonNode event) {
-                   
-                   // Send a Talk message to the room.
-                   defaultRoom.tell(new Talk(username, event.get("text").asText(), event.get("type").asText(), new Date()));
-                   
+            	// Send a Talk message to the room.
+            	   System.out.println("event.get(type).asText() :::: "+event.get("type").asText());
+            	   if(event.get("type").asText().equalsIgnoreCase("message")){
+                	   defaultRoom.tell(new Talk(username, event.get("text").asText(), event.get("type").asText(), new Date(), null));
+                   } else {
+                	   defaultRoom.tell(new Talk(username, null, event.get("type").asText(), new Date(), event.get("text").asText()));
+                   }
                } 
             });
             
@@ -101,9 +104,9 @@ public class ChatRoom extends UntypedActor {
             
             // Received a Talk message
             Talk talk = (Talk)message;
-            
+            System.out.println(" ::::::::::::: "+talk.type);
             if(!talk.username.equalsIgnoreCase("Robot")){
-            	notifyAllTalks("talk", talk.username, talk.text, talk.type, talk.time);
+            		notifyAllTalks("talk", talk);
             }       
             
         } else if(message instanceof Quit)  {
@@ -140,13 +143,15 @@ public class ChatRoom extends UntypedActor {
         }
     }
 
-    public void notifyAllTalks(String kind, String user, String text, String type, Date d) {
+    public void notifyAllTalks(String kind, Talk talk) {
         
     	if(!kind.equalsIgnoreCase("Robot")){
             Chat chat = new Chat();
-            chat.message = text;
-            chat.messageTime = d;
-            chat.userId = User.findByUsername(user);
+            chat.messageType = talk.type;
+            chat.attachement = talk.imageURL;
+            chat.message = talk.text;
+            chat.messageTime = talk.time;
+            chat.userId = User.findByUsername(talk.username);
             chat.save();
         }
     	
@@ -154,11 +159,12 @@ public class ChatRoom extends UntypedActor {
             
             ObjectNode event = Json.newObject();
             event.put("kind", kind);
-            event.put("user", user);
-            event.put("message", text);
-            event.put("type", type);
-            event.put("time", d.toString());
-            event.put("userId", User.findByUsername(user));
+            event.put("user", talk.username);
+            event.put("message", talk.text);
+            event.put("attachment", talk.imageURL);
+            event.put("type", talk.type);
+            event.put("time", talk.time.toString());
+            event.put("userId", User.findByUsername(talk.username));
                         
             ArrayNode m = event.putArray("members");
             for(String u: members.keySet()) {
@@ -192,14 +198,16 @@ public class ChatRoom extends UntypedActor {
         
         final String username;
         final String text;
+        final String imageURL;
         final String type;
         final Date time;
         
-        public Talk(String username, String text, String type, Date time) {
+        public Talk(String username, String text, String type, Date time, String imageURL) {
             this.username = username;
             this.text = text;
             this.type = type;
             this.time = time;
+            this.imageURL =imageURL;
         }
         
     }
