@@ -1,17 +1,27 @@
 package controllers;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import models.Chat;
 import models.ChatRoom;
@@ -22,8 +32,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.codehaus.jackson.JsonNode;
 
 import play.Play;
-import play.api.Routes;
-import play.data.Form;
 import play.data.DynamicForm;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -218,6 +226,7 @@ public class Application extends Controller {
     		UserChat uc = new UserChat();
     		uc.id = chat.id;
     		uc.message = chat.getMessage();
+    		uc.attachment = chat.getAttachement();
     		uc.messageTime = chat.getMessageTime();
     		uc.user = User.find.byId(chat.getUserId()).getName();
     		uc.userPic = User.find.byId(chat.getUserId()).getUserPic();
@@ -291,5 +300,27 @@ public class Application extends Controller {
     	List<User> all = User.find.all();
     	return ok(Json.toJson(all));
     }
-  
+    
+    static final String FILE_PATH = Play.application().configuration().getString("filePath");
+    
+    public static Result downloadFile() throws IOException{
+    	DynamicForm form = DynamicForm.form().bindFromRequest();
+    	long cId = Long.parseLong(form.get("id"));
+    	String fileString = Chat.find.byId(cId).getAttachement();
+    	Date d = new Date();
+    	byte[] arr = decodeImage(fileString);
+    	System.out.println(arr);
+    	/*FileOutputStream fos = new FileOutputStream(FILE_PATH + File.separator + "chat_" + d.getTime() + ".jpg");
+    	BufferedImage img = ImageIO.read(new ByteArrayInputStream(fileString.getBytes()));
+    	fos.write(img);
+    	fos.close();*/
+    	/*OutputStream out = new BufferedOutputStream(new FileOutputStream(FILE_PATH + File.separator + "chat_" + d.getTime() + ".jpg"));
+        out.write(fileString.getBytes());
+        out.close();*/
+    	BufferedImage imag=ImageIO.read(new ByteArrayInputStream(arr));
+    	ImageIO.write(imag, "jpg", new File(FILE_PATH,"chat_" + d.getTime() + ".jpg"));
+    	System.out.println("DONE");
+    	return ok();
+    }    
+
 }

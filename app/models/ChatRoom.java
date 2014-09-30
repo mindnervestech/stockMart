@@ -144,7 +144,7 @@ public class ChatRoom extends UntypedActor {
     }
 
     public void notifyAllTalks(String kind, Talk talk) {
-        
+        Long cId = null;
     	if(!kind.equalsIgnoreCase("Robot")){
             Chat chat = new Chat();
             chat.messageType = talk.type;
@@ -153,15 +153,17 @@ public class ChatRoom extends UntypedActor {
             chat.messageTime = talk.time;
             chat.userId = User.findByUsername(talk.username);
             chat.save();
+            cId = chat.id;
         }
     	
     	for(WebSocket.Out<JsonNode> channel: members.values()) {
             
             ObjectNode event = Json.newObject();
+            event.put("id", cId);
             event.put("kind", kind);
             event.put("user", talk.username);
             event.put("message", talk.text);
-            event.put("attachment", talk.imageURL);
+            //event.put("attachment", talk.imageURL);
             event.put("type", talk.type);
             event.put("time", talk.time.toString());
             event.put("userId", User.findByUsername(talk.username));

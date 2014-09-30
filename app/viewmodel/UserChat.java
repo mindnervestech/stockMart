@@ -10,7 +10,7 @@ public class UserChat {
     public Date messageTime;
     public String type;
     public String user;
-
+    public String attachment;
     public String userPic;
 
 	public Long userId;
