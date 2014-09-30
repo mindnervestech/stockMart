@@ -35,8 +35,69 @@ public class Chat extends Model {
     
     public static Model.Finder<Long,Chat> find = new Finder<Long, Chat>(Long.class, Chat.class);
 
+    
 
-    public static ExpressionList<Chat> findAllByDate(Date d) {
+    public String getMessage() {
+		return message;
+	}
+
+
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
+
+	public String getAttachement() {
+		return attachement;
+	}
+
+
+
+	public void setAttachement(String attachement) {
+		this.attachement = attachement;
+	}
+
+
+
+	public Date getMessageTime() {
+		return messageTime;
+	}
+
+
+
+	public void setMessageTime(Date messageTime) {
+		this.messageTime = messageTime;
+	}
+
+
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+
+
+	public Long getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+
+
+	public static ExpressionList<Chat> findAllByDate(Date d) {
 		return Chat.find.where().gt("messageTime", d);
 	}
 

@@ -22,7 +22,7 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
     			console.log($scope.allChats);
     			if($scope.allChats.length != 0){
 					for(var i=0; i<$scope.allChats.length; i++){
-						var el = $('<div style="float:left;"><img id="userPic" class="user-img"></div><div class="comment-body" style="float:right;width:88%;"><div class="comment-info"><span id="user"></span><span style="float:right;" id="time"></span></div><span id="message"></span></div><hr>');
+						var el = $('<div style="float:left;padding-left:0px;padding-right:0px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1"><img id="userPic" style="width:100%;"></div><div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="float:right;padding-right:0px;"><div style="font-size:11px;color:darkgray;"><span id="user" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="float:left;padding-left:0px;"></span><span style="padding-right:0px;text-align:right;" id="time" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></span></div><span id="message" style="padding-left:0px;padding-right:0px;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></span></div><hr>');
 		            	var d = new Date($scope.allChats[i].messageTime);
 		            	var res = d.toString().split(" ");
 		            	$scope.mTime = res[0] + " " + res[1] + " " + res[2] + " " + res[4] + " IST " + res[3];

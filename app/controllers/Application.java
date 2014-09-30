@@ -217,12 +217,12 @@ public class Application extends Controller {
     	for(Chat chat: allChatsList){
     		UserChat uc = new UserChat();
     		uc.id = chat.id;
-    		uc.message = chat.message;
-    		uc.messageTime = chat.messageTime;
-    		uc.user = User.find.byId(chat.userId).name;
-    		uc.userPic = User.find.byId(chat.userId).userPic;
-    		uc.userId = chat.userId;
-    		uc.type = chat.messageType;
+    		uc.message = chat.getMessage();
+    		uc.messageTime = chat.getMessageTime();
+    		uc.user = User.find.byId(chat.getUserId()).getName();
+    		uc.userPic = User.find.byId(chat.getUserId()).getUserPic();
+    		uc.userId = chat.getUserId();
+    		uc.type = chat.getMessageType();
     		ucAll.add(uc);
     	}
     	Map<String, Object> map = new HashMap<String, Object>();
