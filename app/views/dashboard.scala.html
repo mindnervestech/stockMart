@@ -28,6 +28,32 @@
 	             	
 	             	<div class=" widget-content" style="width:100%;height:65%;">
 						<div class="thumbnail" style="height:100%;" id="members">
+							
+							<div ng-repeat="member in allMembers">
+								
+								<div ng-show="member.status == 'online'">
+								<div style="float:left;">
+									<img id="userImage" class="user-img" ng-src="/getUserPic/{{member.id}}">
+								</div>
+								<div class="comment-body">
+										<span id="user">{{member.name}}</span>
+									    <img id="status" class="user-img" src="/assets/images/online.png">
+								</div>
+								<hr>
+								</div>
+								
+								<div ng-show="member.status == 'offline'">
+								<div style="float:left;">
+									<img id="userImage" class="user-img" ng-src="/getUserPic/{{member.id}}">
+								</div>
+								<div class="comment-body">
+										<span id="user">{{member.name}}</span>
+										<img id="status" class="user-img" src="/assets/images/offline.png">
+								</div>
+								<hr>
+								</div>
+								
+							</div>
 						</div>
 					</div>	
 				</div> <!-- /widget -->
@@ -60,7 +86,6 @@
 										<span style="padding-right:0px;text-align:right;" id="time" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">{{chat.messageTime}}</span>
 									</div>
 									<span id="message" style="float:left;">{{chat.message}}</span>
-									<img ng-hide="true" id="download" class="user-img" src="/assets/images/download.png" style="float:right;">
 								</div>
 								<hr>
 								</div>
@@ -75,7 +100,7 @@
 										<span style="padding-right:0px;text-align:right;" id="time" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">{{chat.messageTime}}</span>
 									</div>
 									<span id="message" style="float:left;">Attachments</span>
-									<img id="download" ng-click="downloadFile(chat.id)" class="user-img" src="/assets/images/download.png" style="float:right;">
+ 									<img id="download" ng-click="downloadFile(chat.id)" class="user-img" src="/assets/images/download.png" style="float:right;">
 								</div>
 								<hr>
 								</div>
@@ -322,19 +347,15 @@ $(function() {
         				type:data.type,
         				userId:data.userId,
         		}
-        		console.log(angular.element('#content').scope().allChats);
-        		angular.element('#content').scope().allChats.push(chat);
-        		console.log(angular.element('#content').scope().allChats);
+        		/* angular.element('#content').scope().allChats.push(chat);
         		var objDiv = document.getElementById("messages");
-        		objDiv.scrollTop = objDiv.scrollHeight;
+        		objDiv.scrollTop = objDiv.scrollHeight; */
+        		angular.element('#content').scope().addChat(chat);
         }
      	// Update the members list
      	
      	angular.element('#content').scope().showOnline(data.members);
-       	//$("#members").html(''); 
-        $(data.members).each(function() {
-        	//$("#members").append('<img src="/getUserPic/'+this+'" class="user-img">');
-        })
+       	
  	}
     
     chatSocket.binaryType = 'arraybuffer';

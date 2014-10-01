@@ -1,27 +1,29 @@
 package controllers;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.Transparency;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.ComponentColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 
 import models.Chat;
 import models.ChatRoom;
@@ -41,6 +43,7 @@ import play.mvc.Http.Session;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.WebSocket;
+import viewmodel.MemberStatus;
 import viewmodel.UserChat;
 
 import com.avaje.ebean.ExpressionList;
@@ -226,10 +229,10 @@ public class Application extends Controller {
     		UserChat uc = new UserChat();
     		uc.id = chat.id;
     		uc.message = chat.getMessage();
-    		uc.attachment = chat.getAttachement();
+    		//uc.attachment = chat.getAttachement();
     		uc.messageTime = chat.getMessageTime();
     		uc.user = User.find.byId(chat.getUserId()).getName();
-    		uc.userPic = User.find.byId(chat.getUserId()).getUserPic();
+    		//uc.userPic = User.find.byId(chat.getUserId()).getUserPic();
     		uc.userId = chat.getUserId();
     		uc.type = chat.getMessageType();
     		ucAll.add(uc);
@@ -298,27 +301,38 @@ public class Application extends Controller {
     
     public static Result loadAllMembers(){
     	List<User> all = User.find.all();
-    	return ok(Json.toJson(all));
+    	List<MemberStatus> allMS = new ArrayList<>();
+    	for(User user: all){
+    		MemberStatus ms = new MemberStatus(); 
+        	ms.id = user.id;
+        	ms.name = user.getName();
+        	ms.status = "offline";
+        	allMS.add(ms);
+    	}
+    	return ok(Json.toJson(allMS));
     }
     
     static final String FILE_PATH = Play.application().configuration().getString("filePath");
+    
+    private static BufferedImage createRGBImage(byte[] bytes, int width, int height) {
+        DataBufferByte buffer = new DataBufferByte(bytes, bytes.length);
+        ColorModel cm = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[]{8, 8, 8}, false, false, Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
+        return new BufferedImage(cm, Raster.createInterleavedRaster(buffer, width, height, width * 3, 3, new int[]{0, 1, 2}, null), false, null);
+    }
+    
     
     public static Result downloadFile() throws IOException{
     	DynamicForm form = DynamicForm.form().bindFromRequest();
     	long cId = Long.parseLong(form.get("id"));
     	String fileString = Chat.find.byId(cId).getAttachement();
     	Date d = new Date();
-    	byte[] arr = decodeImage(fileString);
-    	System.out.println(arr);
-    	/*FileOutputStream fos = new FileOutputStream(FILE_PATH + File.separator + "chat_" + d.getTime() + ".jpg");
-    	BufferedImage img = ImageIO.read(new ByteArrayInputStream(fileString.getBytes()));
-    	fos.write(img);
-    	fos.close();*/
-    	/*OutputStream out = new BufferedOutputStream(new FileOutputStream(FILE_PATH + File.separator + "chat_" + d.getTime() + ".jpg"));
-        out.write(fileString.getBytes());
-        out.close();*/
-    	BufferedImage imag=ImageIO.read(new ByteArrayInputStream(arr));
-    	ImageIO.write(imag, "jpg", new File(FILE_PATH,"chat_" + d.getTime() + ".jpg"));
+    	String[] s = fileString.split(",");
+    	//fileString = fileString.replace("data:image/jpeg;base64,","");
+    	byte[] arr = decodeImage(s[1]);
+    	FileOutputStream fos = new FileOutputStream(FILE_PATH + File.separator + "chat_" + d.getTime() + ".jpg");
+    	fos.write(arr);
+    	fos.flush();
+    	fos.close();
     	System.out.println("DONE");
     	return ok();
     }    

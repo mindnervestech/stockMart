@@ -33,26 +33,29 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
     		});
     }
 	
+	$scope.addChat = function(chat){
+		$scope.allChats.push(chat);
+		$timeout(function(){
+			var objDiv = document.getElementById("messages");
+			objDiv.scrollTop = objDiv.scrollHeight;
+		},100);
+    }
+	
 	$scope.showOnline = function(data){
-		//console.log(data);
 		$scope.allMembers = [];
-    	$http.get('/loadAllMembers', {}
+		$http.get('/loadAllMembers', {}
     		).then(function(res){
-    			$("#members").html('');
     			$scope.allMembers = res.data;
 		    	for(var i=0; i<$scope.allMembers.length; i++){
-					var el1 = $('<div style="float:left;"><img id="userImage" class="user-img"></div><div class="comment-body"><div class="comment-info" style="margin-top:-5px;margin-bottom:-5px;"><span id="user"></span></div><span id="status"></span></div><hr>');
-			       	$("#userImage", el1).attr('src','/getUserPic/'+$scope.allMembers[i].id);
-			       	$("#user", el1).text($scope.allMembers[i].name);
-				    for(var j=0; j<data.length;j++){   	
+					for(var j=0; j<data.length;j++){   	
 			       		if(data[j] == $scope.allMembers[i].id){
-							$("#status", el1).text("available");
+							$scope.allMembers[i].status = "online";
 							break;
 			       		}
-			       		$("#status", el1).text("busy");
+			       		$scope.allMembers[i].status = "offline";
 			    	}	
-			     	$("#members").append(el1);
-				}
+			     }
+		    	console.log($scope.allMembers);
     		}, function(error){
     			
     		});
@@ -182,6 +185,7 @@ taskApp.controller('MyAccountController', function($scope, $http, $timeout, $upl
             file: file
         }).success(function (res) {
         	console.log("success");
+        	location.reload();
         });
 
 	}
