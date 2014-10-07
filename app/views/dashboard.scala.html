@@ -2,306 +2,256 @@
 
 <script src="@routes.Assets.at("javascripts/MarkitQuoteServiceSample.js")" type="text/javascript"></script>
 
-<div id="content" class="clearfix">
+<div id="content1" class="innerLR">
 
-		<div class="header" style="padding-right:20px;">
+	<h2 style="margin-bottom:3%;">Dashboard <span>for your next cool web APP</span></h2>
+
+	
+	<div class="tickertape">
+		<span id="my_xss_magic" style="float:left;width:75%;"><script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42&s=goog,msft,ctsh,aapl,yhoo,amzn,baba"></script></span>
+		<span style="float:right;width:25%;"><input style="float:right;height:initial;width:initial;margin-top:0.5%;" type="text" ng-model="symForQuote" id="symbolsearch1" placeholder="Get Quotes"></span>
+	</div>
+	
+	<div class="row-fluid">
+	<div class="span6" ng-init="loadAllWishlist()">
+		<div class="widget widget-activity margin-none">
+	
+			<div class="widget-head" style="padding:0px;">
+				<h4 class="heading">Wishlist</h4>
+				<div style="float:right;width:50%;padding-top:0.5%;">
+					<a style="float:right;margin-top:1%;margin-left:3%;" class="glyphicons no-js refresh"><i ng-click="refreshAll()"></i></a>
+					<input type="text" style="float:right;width:80%;height:initial;" ng-model="text" id="symbolsearch" placeholder="Enter symbol">
+				</div>
+			</div>
 			
-			<h1 class="page-title">Dashboard</h1>
-		</div>
-
-	<div class="wrp clearfix" style="padding:0px;">
-		<div class="widget-content" style="padding:0px;">
-				<form class="well control-group form-inline" style="height:10%;">
-					<div id="my_xss_magic" class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="float:left;"><script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42&s=goog,msft,ctsh,aapl,yhoo,amzn,baba"></script></div>
-					<span style="float:right;" class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" ng-model="symForQuote" id="symbolsearch1" placeholder="Get Quotes"></span>
-				</form>
-		</div>
-		
-		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-			<div class="fluid" style="width:100%;">
-				<div class="widget" style="margin-top: 0px;">
-					<div class="widget-header">
-						<div class="widget-title">
-							<i class="fa fa-comments"></i> Members
+			<div class="widget-body">
+				<div class="slim-scroll" id="inner-content-div">
+				<div id="resultContainer" data-ng-repeat="result in results">
+								
+					<div class="row-fluid" ng-show="result.Change > 0">
+						<div class="span1" style="margin-top:2%;">
+							<img src="/assets/images/up.jpg">
 						</div>
-					</div> <!-- /widget-header -->
-	             	
-	             	<div class=" widget-content" style="width:100%;height:65%;">
-						<div class="thumbnail" style="height:100%;" id="members">
-							
-							<div ng-repeat="member in allMembers">
-								
-								<div ng-show="member.status == 'online'">
-								<div style="float:left;">
-									<img id="userImage" class="user-img" ng-src="/getUserPic/{{member.id}}">
-								</div>
-								<div class="comment-body">
-										<span id="user">{{member.name}}</span>
-									    <img id="status" class="user-img" src="/assets/images/online.png">
-								</div>
-								<hr>
-								</div>
-								
-								<div ng-show="member.status == 'offline'">
-								<div style="float:left;">
-									<img id="userImage" class="user-img" ng-src="/getUserPic/{{member.id}}">
-								</div>
-								<div class="comment-body">
-										<span id="user">{{member.name}}</span>
-										<img id="status" class="user-img" src="/assets/images/offline.png">
-								</div>
-								<hr>
-								</div>
-								
+						<div class="span11">
+						<div class="row-fluid">
+							<span id="name" class="span5" style="float: left;"><a data-toggle="modal" data-target="#quoteModal" data-ng-click="showQuote($index)" style="cursor:pointer;">{{result.Name}}</a></span>
+							<span id="date" class="span6" style="float: left;font-size: 10px;">{{result.Timestamp}}</span>
+							<span class="span1" style="float:right;"><a class="glyphicons no-js remove"><i ng-click="removeFromWishlist($index)"></i></a></span>
+						</div>
+						<div class="row-fluid">
+							<span id="prize" class="span5" style="font-weight: bolder;">${{result.LastPrice}}</span>	
+							<span id="change" class="span3" style="float: left;">{{result.Change | number:2}}</span>	
+							<span id="change_prcnt" class="span3" style="float: left;font-weight: bolder;">( {{result.ChangePercent | number:2}}% )</span>
+							<span class="span1" style="float:right;"><a class="glyphicons no-js refresh"><i ng-click="refreshQuote(result.Symbol, $index)"></i></a></span>
+						</div>
+						</div>
+					<hr style="width:100%;">
+					</div>
+					
+					<div class="row-fluid" ng-show="result.Change < 0">
+						<div class="span1" style="margin-top:2%;">
+							<img src="/assets/images/down.jpg">
+						</div>
+						<div class="span11">
+						<div class="row-fluid">
+							<span id="name" class="span5" style="float: left;"><a data-toggle="modal" data-target="#quoteModal" data-ng-click="showQuote($index)" style="cursor:pointer;">{{result.Name}}</a></span>
+							<span id="date" class="span6" style="float: left;font-size: 10px;">{{result.Timestamp}}</span>
+							<span class="span1" style="float:right;"><a class="glyphicons no-js remove"><i ng-click="removeFromWishlist($index)"></i></a></span>
+						</div>
+						<div class="row-fluid">
+							<span id="prize" class="span5" style="font-weight: bolder;">${{result.LastPrice}}</span>	
+							<span id="change" class="span3" style="float: left;">{{result.Change | number:2}}</span>	
+							<span id="change_prcnt" class="span3" style="float: left;font-weight: bolder;">( {{result.ChangePercent | number:2}}% )</span>
+							<span class="span1" style="float:right;"><a class="glyphicons no-js refresh"><i ng-click="refreshQuote(result.Symbol, $index)"></i></a></span>
+						</div>
+						</div>
+					<hr style="width:100%;">
+					</div>
+									
+					
+				</div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+	
+	<div class="span6" ng-init="loadAllChats(@localUser.id)">
+	
+		<!-- Chat -->
+		<div class="widget widget-chat margin-none">
+		
+			<div class="widget-head">
+				<h4 class="heading">Chats</h4>
+			</div>
+			
+			<div class="widget-body" style="height:385px;">
+			
+			<!-- Slim Scroll -->
+			<div class="slim-scroll chat-items" id="inner-content-div1">
+				
+				<div ng-repeat="chat in allChats">
+				
+				<!-- Media item -->
+				<div class="media" style="margin-top:0px;" ng-show="chat.type == 'message'">
+					<div class="media-object pull-left thumb"><img ng-src="/getUserPic/{{chat.userId}}" alt="Image" style="width:51px;height:51px;"></div>
+					<div class="media-body">
+						<blockquote>
+							<small><a title="" class="strong">{{chat.user}}</a> <cite>{{chat.messageTime}}</cite></small>
+							<p>{{chat.message}}</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="media" style="margin-top:0px;" ng-show="chat.type == 'image'">
+					<div class="media-object pull-left thumb"><img ng-src="/getUserPic/{{chat.userId}}" alt="Image" style="width:51px;height:51px;"></div>
+					<div class="media-body">
+						<blockquote>
+							<small><a title="" class="strong">{{chat.user}}</a> <cite>{{chat.messageTime}}</cite></small>
+							<p>Attachment<a style="float:right;" class="glyphicons no-js download_alt"><i ng-click="downloadFile(chat.id)"></i></a></p>
+						</blockquote>
+					</div>
+				</div>
+				<!-- // Media item END -->
+				
+				<!-- Media item -->
+				<!-- <div class="media">
+					<div class="media-object pull-right thumb"><img data-src="holder.js/51x51" alt="Image"></div>
+					<div class="media-body right">
+						<blockquote class="pull-right">
+							<small><a href="#" title="" class="strong">John Doe</a><cite> 15 seconds ago</cite></small>
+							<p>In ultricies ante eget tortor euismod vitae molestie eros hendrerit. Cras tristique, orci ac lacinia aliquet, velit risus laoreet lectus, eget sollicitudin metus orci non nulla.</p>
+						</blockquote>
+					</div>
+				</div> -->
+				<!-- // Media item END -->
+			</div>								
+			</div>
+			<!-- // Slim Scroll END -->
+			
+			</div>
+			
+			<div class="chat-controls" style="height:inherit;">
+				<div class="innerLR">
+					<form class="margin-none">
+						<div class="row-fluid">
+							<div class="span12">
+								<textarea id="talk" rows="2" cols="70" class="input-block-level margin-none" placeholder="Press enter to send"></textarea>
 							</div>
+						</div>	
+					</form>
+					Attachments:
+					<div class="row-fluid">
+						<div class="span10">
+						<div class="fileupload fileupload-new" data-provides="fileupload" style="float:left;">
+					  		<span class="btn btn-default btn-file">
+					  			<span class="fileupload-new">Select file</span>
+					  			<span class="fileupload-exists">Change</span>
+					  			<input type="file" id="image"/>
+					  		</span>
+					  		<span class="fileupload-preview"></span>
+					  		<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">&times;</a>
+						</div>
+						</div>
+						<div class="span2">
+							<button id="send" class="btn btn-block btn-inverse">Send</button>
 						</div>
 					</div>	
-				</div> <!-- /widget -->
+				</div>
 			</div>
+			
 		</div>
-		
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-		<!-- Chat Section -->
-		
-			<div class="fluid" ng-init="loadAllChats(@localUser.id)">
-				<div class="widget" style="margin-top: 0px;">
-					<div class="widget-header">
-						<div class="widget-title">
-							<i class="fa fa-comments"></i> Chats
-						</div>
-					</div> <!-- /widget-header -->
-						                                   
-	 	             <div class=" widget-content" style="width:100%;height:65%;">
-						<div class="thumbnail" style="width:100%;height:60%;" id="messages">
-							
-							<div ng-repeat="chat in allChats">
-								
-								<div ng-show="chat.type == 'message'">
-								<div style="float:left;padding-left:0px;padding-right:0px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-									<img id="userPic" style="width:100%;" ng-src="/getUserPic/{{chat.userId}}">
-								</div>
-								<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="float:right;padding-right:0px;">
-									<div style="font-size:11px;color:darkgray;">
-										<span id="user" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="float:left;padding-left:0px;">{{chat.user}}</span>
-										<span style="padding-right:0px;text-align:right;" id="time" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">{{chat.messageTime}}</span>
-									</div>
-									<span id="message" style="float:left;">{{chat.message}}</span>
-								</div>
-								<hr>
-								</div>
-								
-								<div ng-show="chat.type == 'image'">
-								<div style="float:left;padding-left:0px;padding-right:0px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-									<img id="userPic" style="width:100%;" ng-src="/getUserPic/{{chat.userId}}">
-								</div>
-								<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="float:right;padding-right:0px;">
-									<div style="font-size:11px;color:darkgray;">
-										<span id="user" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="float:left;padding-left:0px;">{{chat.user}}</span>
-										<span style="padding-right:0px;text-align:right;" id="time" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">{{chat.messageTime}}</span>
-									</div>
-									<span id="message" style="float:left;">Attachments</span>
- 									<img id="download" ng-click="downloadFile(chat.id)" class="user-img" src="/assets/images/download.png" style="float:right;">
-								</div>
-								<hr>
-								</div>
-							</div>
-							
-            		 	</div>
-            		 
-		             	<div style="width:100%;">
-			             	<textarea id="talk" rows="4" cols="70" placeholder="Press enter to send"></textarea>
-			             	<div>
-								<div style="width:100%;">
-								Attachments:
-								</div>			             	
-			             		<input style="padding-left: 0%; height: inherit; width: 40%; float: left;" type="file" class="image" id="image">
-			             		<button id="send" style="float:right;" class="btn btn-blue">Send</button>
-		             		</div>
-		             	</div>
-		             </div>
-		              
-	            </div> <!-- /widget -->
-			</div>
-	 	</div>
-	 	
-	<!-- Wish-list Section -->
-		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-			<div class="fluid" ng-init="loadAllWishlist()">
-				<div class="widget" style="margin-top: 0px;">
-					<div class="widget-header">
-						<div class="widget-title" style="width:100%;">
-							<i class="fa fa-comments"></i> WishList
-							<div class="widget-content" style="float:right;width:50%;margin-right:4.8%;padding:2px;">
-								<i style="float:right;padding-top:3%;margin-left:5%;" class="fa fa-refresh" ng-click="refreshAll()"></i>
-								<input type="text" style="float:right;width:80%;" ng-model="text" id="symbolsearch" placeholder="Enter symbol">
-							</div>
-						</div>
-					</div> <!-- /widget-header -->
-										
-						                                   
-		             <div class="widget-content" style="width:100%;height:65%;">
-		             						        	
-							<div class="thumbnail" style="width:100%;height:100%;">
-							<div id="resultContainer" data-ng-repeat="result in results">
-								
-								<div class="up" ng-show="result.Change > 0" style="float:left;width:100%;">
-									<div  class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="float:left;">
-										<img style="height:25px;" src="/assets/images/up.jpg">
-									</div>
-									<div data-ng-click="showQuote($index)" class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="float:left;padding-right:0px;">
-										<p id="name" style="width: 100%;font-size: 10px;float: left;margin-bottom: 0px;">{{result.Name}}</p>
-										<p id="prize" style="font-size: 10px; font-weight: bolder;">${{result.LastPrice}}</p>
-									</div>
-									<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7"style="float:right;">
-										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="float:right;padding-right:0px;">
-											<p id="date" style="float: left;font-size: 10px;margin-bottom: 0px;">{{result.Timestamp}}</p>
-											<i style="float:right;" class="fa fa-times" ng-click="removeFromWishlist($index)"></i>
-										</div>
-										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-											<p id="change" style="float: right;font-size: 10px;">{{result.Change | number:2}}</p>
-										</div>
-										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right:0px;">
-											<p id="change_prcnt" style="float: left;font-weight: bolder;font-size: 10px;">( {{result.ChangePercent | number:2}}% )</p>
-											<i style="float:right;" class="fa fa-refresh" ng-click="refreshQuote(result.Symbol, $index)"></i>
-										</div>
-									</div><hr>
-								</div>
-								
-								
-								<div class="down"  ng-show="result.Change < 0"  style="float:left;width:100%;">
-									<div  class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="float:left;">
-										<img style="height:25px;" src="/assets/images/down.jpg">
-									</div>
-									<div data-ng-click="showQuote($index)" class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="float:left;padding-right:0px;">
-										<p id="name" style="width: 100%;float: left;font-size: 10px;margin-bottom: 0px;" data-ng-click="showQuote($index)">{{result.Name}}</p>
-										<p id="prize" style="font-weight: bolder;font-size: 10px;">${{result.LastPrice}}</p>
-									</div>
-									<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7"style="float:right;">
-										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="float:right;padding-right:0px;">
-											<p id="date" style="float: left;font-size: 10px;margin-bottom: 0px;">{{result.Timestamp}}</p>
-											<i style="float:right;" class="fa fa-times" ng-click="removeFromWishlist($index)"></i>
-										</div>
-										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-											<p id="change" style="float: right;font-size: 10px;">{{result.Change | number:2}}</p>
-										</div>
-										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right:0px;">
-											<p id="change_prcnt" style="float: left;font-weight: bolder;font-size: 10px;">( {{result.ChangePercent | number:2}}% )</p>
-											<i style="float:right;" class="fa fa-refresh" ng-click="refreshQuote(result.Symbol, $index)"></i>
-										</div>
-									</div><hr>
-								</div>
-							</div>	
-							</div>					
-            		 </div>
-		            		            
-	             
-				</div> <!-- /widget -->
-			</div>
-	 	</div>
-	 	
+		<!-- // Chat END -->
+
 	</div>
+	</div>
+	
 </div>
 
-<script type="text/ng-template" id="getQuote">
-
-
-        <div class="dialogSpan">
-            <div class="dialogBox">
-                <div class="dialogBox-header" style="background:ghostwhite;height:15%;">
-                    <h1 class="page-title">{{quoteResult.Name}}</h1>
-					<i style="float:right;" class="fa fa-times" ng-click="closeThisDialog()"></i>
-                </div>
-
-                <div class="dialogBox-content">
-                    <table style="width:100%;">
-						<tr style="width:100%;">
-							<td style="width:49%;">
-								<div style="padding-bottom:35%;">
-									<div  class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="float:left;height:75px;">
-										<img style="height:60px;" ng-show="quoteResult.Change > 0" src="/assets/images/up.jpg">
-										<img style="height:60px;" ng-show="quoteResult.Change < 0" src="/assets/images/down.jpg">
-									</div>
-									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="float:left;height:75px;">
-										<p id="name" >{{quoteResult.Name}}</p>
-										<p id="prize" style="font-weight: bolder;font-size:xx-large;">${{quoteResult.LastPrice}}</p>
-									</div>
-								</div>
-								<div>
-									<div  class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-									</div>					
-									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-										<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
-											<p id="change" style="margin-left:-35%;">{{quoteResult.Change | number:2}}</p>
-										</div>
-										<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-											<p id="change_prcnt" style="float: right;">( {{quoteResult.ChangePercent | number:2}}% )</p>
-										</div>	
-									</div>
-								</div>	
-							</td>
-							<td style="width:2%"><img style="height:43%;" src="/assets/images/vertical_bar.png"></td>
-							<td style="width:49%;">
-							<div>	
-								<div>
-									<label id="forDate" style="float:left;">Date:</label>
-									<p id="date">{{quoteResult.Timestamp}}</p>
-								</div>
-								<div>
-									<label id="forOpen" style="float:left;">Open:</label>
-									<p id="open">{{quoteResult.Open}}</p>
-								</div>
-								<div>
-									<label id="forHigh" style="float:left;">High:</label>
-									<p id="high">{{quoteResult.High}}</p>
-								</div>
-								<div>
-									<label id="forLow" style="float:left;">Low:</label>
-									<p id="low">{{quoteResult.Low}}</p>
-								</div>
-								<div>
-									<label id="forChangeYTD" style="float:left;">Change YTD:</label>
-									<p id="changeYTD">{{quoteResult.ChangeYTD | number:2}}</p>
-								</div>
-								<div>
-									<label id="forChangePercentYTD" style="float:left;">Change Percent YTD:</label>
-									<p id="changePercentYTD">{{quoteResult.ChangePercentYTD | number:2}}</p>
-								</div>
-								<div>
-									<label id="forMSDate" style="float:left;">MS Date:</label>
-									<p id="msDate">{{quoteResult.MSDate | number:2}}</p>
-								</div>
-								<div>
-									<label id="forMarketCap" style="float:left;">Market Cap:</label>
-									<p id="marketCap">{{quoteResult.MarketCap}}</p>
-								</div>
-								<div>
-									<label id="forVolume" style="float:left;">Volume:</label>
-									<p id="volume">{{quoteResult.Volume}}</p>
-								</div>
-							</div>
-							</td>	
-						</tr>
-					</table>
-                </div>
-
-
-                <div class="dialogBox-footer">
-                    
-                </div>
-
-            </div>
-        </div>
-
-
-
-</script>	
+<!-- Modal -->
+<div class="modal hide fade" id="quoteModal">
 	
+	<!-- Modal heading -->
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	</div>
+	<!-- // Modal heading END -->
+	
+	<!-- Modal body -->
+	<div class="modal-body" style="overflow: hidden;">
+		<span id="name" class="span6" style="font-size:15px;font-weight:bolder;">{{quoteResult.Name}}({{quoteResult.Symbol}})</span>
+		<div class="span6">
+			<span style="width:50%;">
+				<span id="open" style="font-size:25px;font-weight:bolder;">{{quoteResult.LastPrice}}</span>
+				<span ng-show="quoteResult.Change > 0"><img style="width:5%;" src="/assets/images/StockIndexUp.png"></span>
+				<span ng-show="quoteResult.Change < 0"><img style="width:5%;" src="/assets/images/StockIndexDown.png"></span>
+				<span ng-show="quoteResult.Change > 0" id="change" style="font-size:20px;color:green;">{{quoteResult.Change | number:2}}</span>
+				<span ng-show="quoteResult.Change < 0" id="change" style="font-size:20px;color:red;">{{quoteResult.Change | number:2}}</span>
+				<span ng-show="quoteResult.Change > 0" id="changePercent" style="font-size:20px;color:green;">({{quoteResult.ChangePercent | number:2}}%)</span>
+				<span ng-show="quoteResult.Change < 0" id="changePercent" style="font-size:20px;color:red;">({{quoteResult.ChangePercent | number:2}}%)</span>
+			</span>
+			<span id="timestamp" style="font-size:10px;width:50%;float:right;padding:1%;">{{quoteResult.Timestamp}}</span>
+		</div>	
+	</div>
+	<!-- // Modal body END -->
+	
+	<!-- Modal footer -->
+	<div class="modal-footer">
+		
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="control-group">
+					<label style="float:left;" class="control-label">Open:</label>
+					<label style="font-weight:900;" class="control-label">{{quoteResult.Open}}</label>
+				</div><hr>
+				<div class="control-group">
+					<label style="float:left;" class="control-label">High:</label>
+					<label style="font-weight:900;" class="control-label">{{quoteResult.High}}</label>
+				</div><hr>
+				<div class="control-group">
+					<label style="float:left;" class="control-label">Low:</label>
+					<label style="font-weight:900;" class="control-label">{{quoteResult.Low}}</label>
+				</div><hr>
+				<div class="control-group">
+					<label style="float:left;" class="control-label">Volume:</label>
+					<label style="font-weight:900;" class="control-label">{{quoteResult.Volume}}</label>
+				</div>			
+			</div>
+			<div class="span6">
+				<div class="control-group">
+					<label style="float:left;" class="control-label">Change YTD:</label>
+					<label style="font-weight:900;" class="control-label">{{quoteResult.ChangeYTD | number:2}}</label>
+				</div><hr>
+				<div class="control-group">
+					<label style="float:left;" class="control-label">Change YTD(%):</label>
+					<label style="font-weight:900;" class="control-label">{{quoteResult.ChangePercentYTD | number:2}}%</label>
+				</div><hr>
+				<div class="control-group">
+					<label style="float:left;" class="control-label">MS Date:</label>
+					<label style="font-weight:900;" class="control-label">{{quoteResult.MSDate | number:2}}</label>
+				</div><hr>
+				<div class="control-group">
+					<label style="float:left;" class="control-label">Market Cap:</label>
+					<label style="font-weight:900;" class="control-label">{{quoteResult.MarketCap}}</label>
+				</div>			
+			</div>
+		</div>
+	
+	</div>
+	<!-- // Modal footer END -->
+	
+</div>
+<!-- // Modal END -->	
+
+
 <script>
 
 $(function() {
     var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
     var chatSocket = new WS("@routes.Application.chat(localUser.name).webSocketURL(request)")
 
+    var control = $("#image");
+    
     var sendImage = function(){
     	var file = document.getElementById("image").files[0];
 
@@ -314,12 +264,14 @@ $(function() {
         	chatSocket.send(JSON.stringify(
                     {text: reader.result,type: "image"}
             ));
+        	control.replaceWith( control.val('').clone( true ) );
         	//document.getElementById("image") = '';
         };
         // Make sure the file exists and is an image
         if(file && file.type.match("image")){
             reader.readAsDataURL(file);
         }
+        
     } 
     
     
@@ -338,7 +290,7 @@ $(function() {
         console.log(data);
         var chat = {};
         if(data.kind == "talk"){
-        		chat = {
+        	chat = {
         				id:data.id,
         				attachment:data.attachment,
         				message:data.message,
@@ -346,16 +298,13 @@ $(function() {
         				user:data.user,
         				type:data.type,
         				userId:data.userId,
-        		}
-        		/* angular.element('#content').scope().allChats.push(chat);
-        		var objDiv = document.getElementById("messages");
-        		objDiv.scrollTop = objDiv.scrollHeight; */
-        		angular.element('#content').scope().addChat(chat);
+        	}
+       		angular.element('#content1').scope().addChat(chat);
+        //}else{
+     		// Update the members list
+     		//angular.element('#content1').scope().showOnline(data.members);
         }
-     	// Update the members list
-     	
-     	angular.element('#content').scope().showOnline(data.members);
-       	
+        angular.element('#content1').scope().showOnline(data.members);
  	}
     
     chatSocket.binaryType = 'arraybuffer';
@@ -376,15 +325,16 @@ $(function() {
 	
 })
 
-
-$(document).ready(function() {
-   	console.log( "ready!" );
-  	$(".thumbnail").niceScroll();
+$(function(){
+    $('#inner-content-div').slimScroll({
+        height: '440px'
+    });
 });
-
-
-
-
+$(function(){
+    $('#inner-content-div1').slimScroll({
+        height: '300px'
+    });
+});
 
 $(function() {
 
@@ -417,7 +367,7 @@ $(function() {
 			minLength: 0,
 			select: function( event, ui ) {
 				console.log(ui.item.item);
-				angular.element('#content').scope().addToWishlist(ui.item.item);
+				angular.element('#content1').scope().addToWishlist(ui.item.item);
 				$("span.label-info").html("You selected " + ui.item.label).fadeIn("fast");
 			},
 			open: function() {
@@ -462,7 +412,8 @@ $(function() {
 			minLength: 0,
 			select: function( event, ui ) {
 				console.log(ui.item.item);
-				angular.element('#content').scope().getQuote(ui.item.item);
+				angular.element('#content1').scope().getQuote(ui.item.item);
+				$('#quoteModal').modal('toggle');
 				$("span.label-info").html("You selected " + ui.item.label).fadeIn("fast");
 			},
 			open: function() {

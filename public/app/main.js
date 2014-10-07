@@ -8,6 +8,25 @@ taskApp.controller('ApplicationController', function($scope, $http) {
 		$scope.userImage = '/getUserPic/' + uId;
 	}
 	
+	$scope.showOnline = function(data){
+		$scope.allMembers = [];
+		$http.get('/loadAllMembers', {}
+    		).then(function(res){
+    			$scope.allMembers = res.data;
+		    	for(var i=0; i<$scope.allMembers.length; i++){
+					for(var j=0; j<data.length;j++){   	
+			       		if(data[j] == $scope.allMembers[i].id){
+							$scope.allMembers[i].status = "online";
+							break;
+			       		}
+			       		$scope.allMembers[i].status = "offline";
+			    	}	
+			     }
+		    }, function(error){
+    			
+    		});
+	}
+	
 });
 
 taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDialog) {
@@ -23,10 +42,10 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
 		            	var res = d.toString().split(" ");
 		            	$scope.allChats[i].messageTime = res[0] + " " + res[1] + " " + res[2] + " " + res[4] + " IST " + res[3];
 		            	$timeout(function(){
-		            		var objDiv = document.getElementById("messages");
-		            		objDiv.scrollTop = objDiv.scrollHeight;
+		            		var scrollTo_val = $('#inner-content-div1').prop('scrollHeight') + 'px';
+		            		$('#inner-content-div1').slimScroll({ scrollTo : scrollTo_val });
 		            	})
-					}
+		           	}
     			}
     		}, function(error){
     			
@@ -36,31 +55,12 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
 	$scope.addChat = function(chat){
 		$scope.allChats.push(chat);
 		$timeout(function(){
-			var objDiv = document.getElementById("messages");
-			objDiv.scrollTop = objDiv.scrollHeight;
-		},100);
+    		var scrollTo_val = $('#inner-content-div1').prop('scrollHeight') + 'px';
+    		$('#inner-content-div1').slimScroll({ scrollTo : scrollTo_val });
+    	},10);
     }
 	
-	$scope.showOnline = function(data){
-		$scope.allMembers = [];
-		$http.get('/loadAllMembers', {}
-    		).then(function(res){
-    			$scope.allMembers = res.data;
-		    	for(var i=0; i<$scope.allMembers.length; i++){
-					for(var j=0; j<data.length;j++){   	
-			       		if(data[j] == $scope.allMembers[i].id){
-							$scope.allMembers[i].status = "online";
-							break;
-			       		}
-			       		$scope.allMembers[i].status = "offline";
-			    	}	
-			     }
-		    	console.log($scope.allMembers);
-    		}, function(error){
-    			
-    		});
-	}
-
+	
 	$scope.downloadFile = function(cId){
 		console.log(cId);
 		$.fileDownload('/downloadFile', {
@@ -160,14 +160,12 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
     		});
     		console.log($scope.quoteResult);
     	});
-    	ngDialog.open({template: 'getQuote', scope: $scope});
+    
     }
     
-    $scope.showQuote = function(index){
-    	//alert("hiii");
+    $scope.showQuote = function(index) {
     	console.log($scope.results[index]);
     	$scope.quoteResult = $scope.results[index];
-    	ngDialog.open({template: 'getQuote', scope: $scope});
     }
           
 });

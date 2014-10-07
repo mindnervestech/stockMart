@@ -1,55 +1,58 @@
-<div id="content" class="clearfix">
+<div id="content1" class="innerLR">
 
-		<div class="header">
-			
-			<h1 class="page-title">My Account</h1>
+	<h2 style="margin-bottom:3%;">My Account</h2>
 
-		</div>
-
-	<div class="wrp clearfix">
-	
-			<div class="quick-nav">
-				<ul>
-					<li ng-class="selectedTab == 1? 'qn-first active' : 'qn-first'"><a href="#/myAccount">Profile Picture</a></li>
-					<li ng-class="selectedTab == 2? 'qn-last active' : 'qn-last'"><a href="#/changePass">Change Password</a></li>
-				</ul>
-			</div>
-	
-	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				<div class="widget grid6 col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left:0px;padding-right:0px;height:50%;">
-					<div class="widget-header">
-						<div class="widget-title">
-							 Upload Profile Picture
-						</div>
-					</div> <!-- /widget-header -->
-				
-		<aside class="add-pic col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-right:25%;">
-			<aside class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<img class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="margin-left:12.5%;"
-                                     id="selectedImage"
-                                     name="post-photo2" data-ng-mouseenter="hover = true"
-                                     data-ng-mouseleave="hover = false"
-                                     tooltip-placement="bottom" data-ng-click="remove_image(0)"
-                                     data-ng-src="{{img}}" alt="">
-			</aside>
-			<aside class="pic-dtls col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-left:25%;padding-left:0px;padding-right:0px;">
-				<span class="pic-btn col-xs-9 col-sm-9 col-md-9 col-lg-9" style="margin-left:12.5%;padding-left:0px;padding-right:0px;"> 
-					<input type="file" id="userPic" accept="image/*" data-ng-file-select="onFileSelect($files)"/>Select Picture
-				</span> 
-			</aside>
-		</aside>
-
-		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-left:25%;">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-left:25%;">
-		    	<button class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="margin-left:12.5%;padding-left:0px;padding-right:0px;" id="uploadUserPic" ng-click="uploadUserPic()">Upload</button>
-			</div>
-		</div> 
-	             
+	<!-- Widget -->
+	<div class="widget widget-tabs border-bottom-none">
 		
-		</div> <!-- /widget -->
-	</div>
+		<!-- Widget heading -->
+		<div class="widget-head">
+			<ul>
+				<li ng-class="selectedTab == 1? 'active' : ''"><a href="#/myAccount">Proflie Picture</a></li>
+				<li ng-class="selectedTab == 2? 'active' : ''"><a href="#/changePass">Change Password</a></li>
+			</ul>
+		</div>
+		<!-- // Widget heading END -->
+			
+		<div class="widget-body">
+			<!-- Row -->
+			<div class="row-fluid">
+				<!-- Column -->
+				<div class="span6">
+					
+					<div class="add-pic">
+						<div style="width:50%;height:25%;">
+							<img id="selectedImage" name="post-photo2" data-ng-mouseenter="hover = true"
+			                     data-ng-mouseleave="hover = false" style="height:100%;width:100%;"
+			                     tooltip-placement="bottom" data-ng-click="remove_image(0)"
+			                     data-ng-src="{{img}}" alt="">
+						</div>
+				
+						<div class="fileupload fileupload-new" data-provides="fileupload" style="float:left;margin-top:5%;">
+					  		<span class="btn btn-default btn-file">
+					  			<span class="fileupload-new">Select file</span>
+					  			<span class="fileupload-exists">Change</span>
+					  			<input type="file" id="userPic" accept="image/*" data-ng-file-select="onFileSelect($files)"/>
+					  		</span>
+					  		<span class="fileupload-preview"></span>
+					  		<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">&times;</a>
+						</div>
+					</div>
+						
+				</div>
+			</div>
+			
+			<!-- Form actions -->
+			<div class="form-actions" style="margin: 0;padding-left:0px;">
+				<button style="padding-left:20px;padding-right:20px;" class="btn btn-icon btn-primary glyphicons circle_ok" id="uploadUserPic" ng-click="uploadUserPic()">Upload</button>
+			</div>
+			<!-- // Form actions END -->
+			
+		</div>	
 	
 	</div>
+			
 </div>
+	
 
 	

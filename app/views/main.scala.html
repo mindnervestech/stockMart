@@ -4,62 +4,75 @@
 
 
 <html lang="en">
-<body>
+<body class="login">
 
-	<div id="loading">
-		<div>
-			<div></div>
-		    <div></div>
-		    <div></div>
-		</div>
-	</div>
+	<!-- Wrapper -->
+<div id="login">
 
-	<div>
-		<div id="content" class="c-login clearfix">
-
-			<div class="header">
-					<a href="index.html"><img src="@routes.Assets.at("images/logo.png")"></a>
-			</div> <!-- /header -->
-
-			<div class="breadcrumbs">
-				<i class="fa fa-key"></i> Login
-			</div>
-
-			@if(flash.contains("error")) {
+	<div class="container">
+	
+		<div class="wrapper">
+		
+			<h1 class="glyphicons lock">Ergo Admin <i></i></h1>
+		
+			<!-- Box -->
+			<div class="widget">
+				
+				<div class="widget-head">
+					<h3 class="heading">Login area</h3>
+					<div class="pull-right">
+						Don't have an account? 
+						<a href="@routes.Application.signup" class="btn btn-inverse btn-mini">Sign up</a>
+					</div>
+				</div>
+				<div class="widget-body">
+					@if(flash.contains("error")) {
                        <p class="error" style="color:red;">
                            @flash.get("error")
                        </p>
                    }
-			<div class="widget-content">
-				<form role="form" id="Formsigninajax" action='@routes.Application.doLogin' method="POST">
-                    <div class="form-group">
-                       <label for="exampleInputEmail1">Email address</label>
-                       <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                       <label for="exampleInputPassword1">Password</label>
-                       <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <ul class="sign-up-options">
-                       <button style="margin-left:-17.5%;" type="submit" class="btn btn-default login">Login</button>
-                    </ul>
-                    <div class="clearfix"></div>
-                    <div id="dispsignerror"></div>
-                 </form>
-              </div>
-              <div class="modal-footer">
-              	 <div><a href="@routes.Application.forgotPass">Forgot Password?</a></div>	
-                 <div><a href="@routes.Application.signup">Not a member? Sign up</a></div>
-              </div>
+									
+					<!-- Form -->
+					<form action='@routes.Application.doLogin' method="POST" role="form"> 
+						<label>Email</label>
+						<input type="text" class="input-block-level" name="email" placeholder="Your Email address"/> 
+						<label>Password <a class="password" href="@routes.Application.forgotPass">forgot your password?</a></label>
+						<input type="password" name="password" class="input-block-level margin-none" placeholder="Your Password" />
+						<div class="separator bottom"></div> 
+						<div class="row-fluid">
+							<!-- <div class="span8">
+								<div class="uniformjs"><label class="checkbox"><input type="checkbox" value="remember-me">Remember me</label></div>
+							</div> -->
+							<div class="span4 center">
+								<button class="btn btn-block btn-primary" type="submit">Sign in</button>
+							</div>
+						</div>
+					</form>
+					<!-- // Form END -->
+							
+				</div>
+				<div class="widget-footer">
+					<p class="glyphicons restart"><i></i>Please enter your username and password ...</p>
+				</div>
 			</div>
+			<!-- // Box END -->
 			
+			<!-- <div class="innerAll center">
+				<p>Alternatively</p>
+				<a href="index.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light" class="btn btn-icon-stacked btn-block btn-facebook glyphicons facebook"><i></i><span>Join using your</span><span class="strong">Facebook Account</span></a>
+				<p>or</p>
+				<a href="index.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light" class="btn btn-icon-stacked btn-block btn-google glyphicons google_plus"><i></i><span>Join using your</span><span class="strong">Google Account</span></a>
+				<p>Having troubles? <a href="faq.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light">Get Help</a></p>
+			</div> -->
 			
-
-			
-
-		</div> <!-- /content -->
-
-	</div> <!-- /wrapper -->
+		</div>
+		
+	</div>
+	
+</div>
+<!-- // Wrapper END -->	
+	
+	
 
 </body>
 </html>

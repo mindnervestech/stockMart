@@ -127,8 +127,8 @@ public class ChatRoom extends UntypedActor {
         for(WebSocket.Out<JsonNode> channel: members.values()) {
             
             ObjectNode event = Json.newObject();
-            /*event.put("kind", kind);
-            event.put("user", user);
+            //event.put("kind", kind);
+            /*event.put("user", user);
             event.put("message", text);
             event.put("type", type);
             event.put("time", time.toString());

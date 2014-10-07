@@ -1,42 +1,57 @@
-<div id="content" class="clearfix">
+<div id="content1" class="innerLR">
 
-		<div class="header">
-			
-			<h1 class="page-title">My Account</h1>
+	<h2 style="margin-bottom:3%;">My Account</h2>
 
+	<!-- Widget -->
+	<div class="widget widget-tabs border-bottom-none">
+		
+		<!-- Widget heading -->
+		<div class="widget-head">
+			<ul>
+				<li ng-class="selectedTab == 1? 'active' : ''"><a href="#/myAccount">Proflie Picture</a></li>
+				<li ng-class="selectedTab == 2? 'active' : ''"><a href="#/changePass">Change Password</a></li>
+			</ul>
 		</div>
-
-	<div class="wrp clearfix">
-	
-			<div class="quick-nav">
-				<ul>
-					<li ng-class="selectedTab == 1? 'qn-first active' : 'qn-first'"><a href="#/myAccount">Profile Picture</a></li>
-					<li ng-class="selectedTab == 2? 'qn-last active' : 'qn-last'"><a href="#/changePass">Change Password</a></li>
-				</ul>
-			</div>
-	
-	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				<div class="widget grid6 col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left:0px;padding-right:0px;height:50%;">
-					<div class="widget-header">
-						<div class="widget-title">
-							 Change Password
+		<!-- // Widget heading END -->
+			
+		<div class="widget-body">
+			<!-- Row -->
+			<div class="row-fluid">
+				<!-- Column -->
+				<div class="span6">
+					<!-- Group -->
+					<div class="control-group">
+						<label class="control-label">New Password</label>
+						<div class="controls">
+							<input type="password" id="pwd" name="pwd" ng-model="pwd" placeholder="Password" class="span10" />
+							<span style="margin: 0;" class="btn-action single glyphicons circle_question_mark" data-toggle="tooltip" data-placement="top" data-original-title="First name is mandatory"><i></i></span>
 						</div>
-					</div> <!-- /widget-header -->
-		<div class="comment widget-content">		
-			<input style="width:50%;" type="password" id="pwd" name="pwd" ng-model="pwd" placeholder="Password">
-			<input style="width:50%;" type="password" id="confPwd" name="confPwd" ng-model="confPwd" placeholder="Confirm Password">
-
-		
-			<div style="float:left;width:100%;margin-left:44%;margin-top:2%;">
-		    	<button id="changePassword" ng-click="changePassword()">Save</button>
+					</div>
+					<!-- // Group END -->
+					
+					<!-- Group -->
+					<div class="control-group">
+						<label class="control-label">Confirm New Password</label>
+						<div class="controls">
+							<input type="password" id="confPwd" name="confPwd" ng-model="confPwd" placeholder="Confirm New Password" class="span10" />
+							<span style="margin: 0;" class="btn-action single glyphicons circle_question_mark" data-toggle="tooltip" data-placement="top" data-original-title="Last name is mandatory"><i></i></span>
+						</div>
+					</div>
+					<!-- // Group END -->
+					
+				</div>
 			</div>
-		</div> 
-	             
-		
-		</div> <!-- /widget -->
-	</div>
+			
+			<!-- Form actions -->
+			<div class="form-actions" style="margin: 0;padding-left:0px;">
+				<button type="submit" ng-click="changePassword()" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Save changes</button>
+			</div>
+			<!-- // Form actions END -->
+			
+		</div>	
 	
 	</div>
+			
 </div>
-
+	
 	
