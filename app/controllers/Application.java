@@ -334,7 +334,11 @@ public class Application extends Controller {
     	fos.flush();
     	fos.close();
     	System.out.println("DONE");
-    	return ok();
+    	response().setContentType("application/octet-stream");
+		response().setHeader("Content-Disposition",
+				"attachment;filename=chat_" + d.getTime() +".jpg");
+		response().setCookie("fileDownload", "true");
+		return ok(new File(FILE_PATH + File.separator + "chat_" + d.getTime() + ".jpg"));
     }    
 
 }

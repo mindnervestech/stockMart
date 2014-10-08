@@ -63,11 +63,17 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
 	
 	$scope.downloadFile = function(cId){
 		console.log(cId);
+		$('#downloadModal').modal('toggle');
 		$.fileDownload('/downloadFile', {
-			preparingMessageHtml: "Please wait...",
-			failMessageHtml: "There was a problem downloading file, please try again.",
 			httpMethod: "POST",
-			data: {id:cId}
+			data: {id:cId},
+			successCallback: function () {
+				$('#downloadModal').modal('toggle');
+            },
+            failCallback: function () {
+            	$('#downloadModal').modal('toggle');
+            	$('#errorModal').modal('toggle');
+            }
 		});
 	}
 	

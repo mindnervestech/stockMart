@@ -3,13 +3,16 @@
 <script src="@routes.Assets.at("javascripts/MarkitQuoteServiceSample.js")" type="text/javascript"></script>
 
 <div id="content1" class="innerLR">
-
-	<h2 style="margin-bottom:3%;">Dashboard <span>for your next cool web APP</span></h2>
-
-	
+	<div class="row-fluid">
+		<div class="span9">
+			<h2 style="margin-bottom:2%;margin-top:2%;">Dashboard <span>for your next cool web APP</span></h2>
+		</div>
+		<div class="span3">
+			<input style="margin-top:7%;height:initial;width:initial;float:right;" type="text" ng-model="symForQuote" id="symbolsearch1" placeholder="Get Quotes">
+		</div>
+	</div>	
 	<div class="tickertape">
-		<span id="my_xss_magic" style="float:left;width:75%;"><script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42&s=goog,msft,ctsh,aapl,yhoo,amzn,baba"></script></span>
-		<span style="float:right;width:25%;"><input style="float:right;height:initial;width:initial;margin-top:0.5%;" type="text" ng-model="symForQuote" id="symbolsearch1" placeholder="Get Quotes"></span>
+		<span id="my_xss_magic"><script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42&s=goog,msft,ctsh,aapl,yhoo,amzn,baba"></script></span>
 	</div>
 	
 	<div class="row-fluid">
@@ -93,23 +96,45 @@
 				<div ng-repeat="chat in allChats">
 				
 				<!-- Media item -->
-				<div class="media" style="margin-top:0px;" ng-show="chat.type == 'message'">
-					<div class="media-object pull-left thumb"><img ng-src="/getUserPic/{{chat.userId}}" alt="Image" style="width:51px;height:51px;"></div>
-					<div class="media-body">
-						<blockquote>
-							<small><a title="" class="strong">{{chat.user}}</a> <cite>{{chat.messageTime}}</cite></small>
-							<p>{{chat.message}}</p>
-						</blockquote>
+				<div ng-show="chat.type == 'message'">
+					<div class="media" style="margin-top:0px;" ng-show="chat.user != '@localUser.name'">
+						<div class="media-object pull-left thumb"><img ng-src="/getUserPic/{{chat.userId}}" alt="Image" style="width:51px;height:51px;"></div>
+						<div class="media-body">
+							<blockquote>
+								<small><a title="" class="strong">{{chat.user}}</a> <cite>{{chat.messageTime}}</cite></small>
+								<p>{{chat.message}}</p>
+							</blockquote>
+						</div>
+					</div>	
+					<div class="media" style="margin-top:0px;" ng-show="chat.user == '@localUser.name'">
+						<div class="media-object pull-right thumb"><img ng-src="/getUserPic/{{chat.userId}}" alt="Image" style="width:51px;height:51px;"></div>
+						<div class="media-body right">
+							<blockquote class="pull-right">
+								<small><a title="" class="strong">{{chat.user}}</a> <cite>{{chat.messageTime}}</cite></small>
+								<p>{{chat.message}}</p>
+							</blockquote>
+						</div>
 					</div>
 				</div>
 				
-				<div class="media" style="margin-top:0px;" ng-show="chat.type == 'image'">
-					<div class="media-object pull-left thumb"><img ng-src="/getUserPic/{{chat.userId}}" alt="Image" style="width:51px;height:51px;"></div>
-					<div class="media-body">
-						<blockquote>
-							<small><a title="" class="strong">{{chat.user}}</a> <cite>{{chat.messageTime}}</cite></small>
-							<p>Attachment<a style="float:right;" class="glyphicons no-js download_alt"><i ng-click="downloadFile(chat.id)"></i></a></p>
-						</blockquote>
+				<div ng-show="chat.type == 'image'">
+					<div class="media" style="margin-top:0px;" ng-show="chat.user != '@localUser.name'">
+						<div class="media-object pull-left thumb"><img ng-src="/getUserPic/{{chat.userId}}" alt="Image" style="width:51px;height:51px;"></div>
+						<div class="media-body">
+							<blockquote>
+								<small><a title="" class="strong">{{chat.user}}</a> <cite>{{chat.messageTime}}</cite></small>
+								<p>Attachment<a style="float:right;" class="glyphicons no-js download_alt"><i ng-click="downloadFile(chat.id)"></i></a></p>
+							</blockquote>
+						</div>
+					</div>
+					<div class="media" style="margin-top:0px;" ng-show="chat.user == '@localUser.name'">
+						<div class="media-object pull-right thumb"><img ng-src="/getUserPic/{{chat.userId}}" alt="Image" style="width:51px;height:51px;"></div>
+						<div class="media-body right">
+							<blockquote class="pull-right">
+								<small><a title="" class="strong">{{chat.user}}</a> <cite>{{chat.messageTime}}</cite></small>
+								<p>Attachment<a style="float:right;" class="glyphicons no-js download_alt"><i ng-click="downloadFile(chat.id)"></i></a></p>
+							</blockquote>
+						</div>
 					</div>
 				</div>
 				<!-- // Media item END -->
@@ -242,6 +267,56 @@
 	
 </div>
 <!-- // Modal END -->	
+
+<!-- Modal -->
+<div class="modal hide fade" id="downloadModal">
+	
+	<!-- Modal heading -->
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	</div>
+	<!-- // Modal heading END -->
+	
+	<!-- Modal body -->
+	<div class="modal-body" style="overflow: hidden;">
+		We are preparing your report, please wait...
+ 	    <div class="ui-progressbar-value ui-corner-left ui-corner-right" style="width: 100%; height:22px; margin-top: 20px;"></div>
+	</div>
+	<!-- // Modal body END -->
+	
+	<!-- Modal footer -->
+	<div class="modal-footer">
+	
+	</div>
+	<!-- // Modal footer END -->
+	
+</div>
+<!-- // Modal END -->	
+
+<!-- Modal -->
+<div class="modal hide fade" id="errorModal">
+	
+	<!-- Modal heading -->
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	</div>
+	<!-- // Modal heading END -->
+	
+	<!-- Modal body -->
+	<div class="modal-body" style="overflow: hidden;">
+		There was a problem downloading your file, please try again.
+	</div>
+	<!-- // Modal body END -->
+	
+	<!-- Modal footer -->
+	<div class="modal-footer">
+	
+	</div>
+	<!-- // Modal footer END -->
+	
+</div>
+<!-- // Modal END -->	
+
 
 
 <script>
