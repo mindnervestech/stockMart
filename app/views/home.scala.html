@@ -236,7 +236,21 @@
 	<script src="/assets/common/theme/scripts/plugins/other/jquery-slimScroll/jquery.slimscroll.min.js"></script>
 	<script src="/assets/common/bootstrap/extend/jasny-bootstrap/js/bootstrap-fileupload.js"></script>
 	<script src="/assets/common/theme/scripts/demo/modals.js"></script>
-	    
+	<script src="/assets/common/theme/scripts/plugins/color/jquery-miniColors/jquery.miniColors.js"></script>
+	<script src="/assets/common/theme/scripts/plugins/system/jquery.cookie.js"></script>
+	
+	<script>
+	var primaryColor = '#8ec657',
+		dangerColor = '#b55151',
+		successColor = '#609450',
+		warningColor = '#ab7a4b',
+		inverseColor = '#45484d';
+	</script>
+	
+	<script>
+	var themerPrimaryColor = primaryColor;
+	</script>
+	<script src="/assets/common/theme/scripts/demo/themer.js"></script>    
 	
 </head>
 
@@ -342,6 +356,12 @@
 						</ul>
 					</li>
 				</ul>
+				
+				
+				<!-- Themer -->
+				<a data-target="#themer" data-toggle="collapse" class="glyphicons eyedropper single-icon"><i></i></a>
+				<!-- // Themer END -->
+				
 				<div class="clearfix"></div>
 				<div class="separator bottom"></div>
 				
@@ -359,6 +379,21 @@
 		
 	</div>	
 	
+<!-- Themer -->
+<div id="themer" class="collapse">
+	<div class="wrapper">
+		<span class="close2">&times; close</span>
+		<h4>Themer <span>color options</span></h4>
+		<ul>
+			<li>Theme: <select id="themer-theme" class="pull-right"></select><div class="clearfix"></div></li>
+			<li>Primary Color: <input type="text" data-type="minicolors" data-default="#ffffff" data-slider="hue" data-textfield="false" data-position="left" id="themer-primary-cp" /><div class="clearfix"></div></li>
+			<li>
+				<span class="link" id="themer-custom-reset">reset theme</span>
+			</li>
+		</ul>
+	</div>
+</div>
+<!-- // Themer END -->	
 	
 			
 </body>
