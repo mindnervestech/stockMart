@@ -308,17 +308,19 @@
 		
 		
 		<!-- Sidebar menu & content wrapper -->
-		<div id="wrapper">
+		<div id="wrapper" style="height:90%;">
 			
 		<!-- Sidebar Menu -->
 		<div id="menu" class="hidden-phone hidden-print">
-				
-				<!-- Brand -->
-				<div class="appbrand row-fluid" style="padding:0px;">
-			<span class="span10" style="float:left;font-size:x-large;font-weight:bold;color:#8ec657;padding-left:5%;">StockMart</span>
-			<a class="glyphicons no-js home span2" href="#" style="float:right;margin-top:3%"><i></i></a>
-				</div>
-				
+			<!-- Brand -->
+			<a class="appbrand1">StockMart</a>
+			
+			<a class="glyphicons no-js home" href="#" style="float:right;margin-top:3%"><i></i></a>
+			
+			<!-- Themer -->
+			<a style="float:right;margin-top:3%" data-target="#themer" data-toggle="collapse" class="glyphicons cogwheel single-icon"><i></i></a>
+			<!-- // Themer END -->
+			
 				<!-- Scrollable menu wrapper with Maximum height -->
 				<div class="slim-scroll">
 				
@@ -336,31 +338,21 @@
 				</span>
 				<!-- // Sidebar Profile END -->
 				
-				<ul class="menu-1">
-					<li class="hasSubmenu active">
-						<a style="background:#CBF789;" data-target="#menu-recent-stats" data-toggle="collapse"><span>Members</span></a>
-						<ul class="collapse in" id="menu-recent-stats">
-							<li ng-repeat="member in allMembers">
-								<div ng-show="member.status == 'online'" class="row-fluid" style="padding:2%;">
-									<span class="span3"><img id="userImage" style="height:50px;width:100%;" ng-src="/getUserPic/{{member.id}}"></span>
-									<span class="span6" id="user">{{member.name}}</span>
-									<span class="span2"><img id="status" src="/assets/images/online.png"></span>
-								</div>
-								
-								<div ng-show="member.status == 'offline'" class="row-fluid" style="padding:2%;">
-									<span class="span3"><img id="userImage" style="height:50px;width:100%;" ng-src="/getUserPic/{{member.id}}"></span>
-									<span class="span6" id="user">{{member.name}}</span>
-									<span class="span2"><img id="status" src="/assets/images/offline.png"></span>
-								</div>
-							</li>
-						</ul>
+				<ul class="menu-0">
+					<li class="active"><a><i></i><span>Members</span></a></li>
+					<li ng-repeat="member in allMembers">
+						<div class="row-fluid" style="padding:2%;">
+							<span class="span2"><img id="userImage" style="height:35px;width:100%;" ng-src="/getUserPic/{{member.id}}"></span>
+							<span class="span7" id="user">{{member.name}}</span>
+							<span ng-show="member.status == 'online'" class="span2"><img id="status" src="/assets/images/online.png"></span>
+							<span ng-show="member.status == 'offline'" class="span2"><img id="status" src="/assets/images/offline.png"></span>
+						</div>
+						
 					</li>
 				</ul>
+		
 				
-				
-				<!-- Themer -->
-				<a data-target="#themer" data-toggle="collapse" class="glyphicons eyedropper single-icon"><i></i></a>
-				<!-- // Themer END -->
+			
 				
 				<div class="clearfix"></div>
 				<div class="separator bottom"></div>
@@ -387,9 +379,9 @@
 		<ul>
 			<li>Theme: <select id="themer-theme" class="pull-right"></select><div class="clearfix"></div></li>
 			<li>Primary Color: <input type="text" data-type="minicolors" data-default="#ffffff" data-slider="hue" data-textfield="false" data-position="left" id="themer-primary-cp" /><div class="clearfix"></div></li>
-			<li>
+			<!-- <li>
 				<span class="link" id="themer-custom-reset">reset theme</span>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 </div>

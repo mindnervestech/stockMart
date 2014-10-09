@@ -38,6 +38,7 @@
 #tlyPageGuideWrapper #tlyPageGuideMessages span,
 .tabsbar.tabsbar-2.active-fill ul li.active a,
 .shop-client-products.list ul li a .glyphicons i,
+#menu .appbrand1,
 .navbar.main .topnav > li.open.dd-1 .dropdown-menu > li:not(.profile):hover > a {
   background-color: #ba5d32;
 }

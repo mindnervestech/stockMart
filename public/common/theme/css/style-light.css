@@ -526,6 +526,17 @@ body > .container-fluid.fixed #content {
   color: #8ec657;
   background: #fafafa;
 }
+#menu .appbrand1 {
+  font-size: 19px;
+  font-weight: 700;
+  display: block;
+  text-decoration: none;
+  height: 38px;
+  line-height: 38px;
+  padding: 0 10px;
+  color: #fff;
+  background: #8ec657;
+}
 #menu .appbrand > span {
   font-weight: 400;
   color: #b3b3b3;

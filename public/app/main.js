@@ -9,7 +9,7 @@ taskApp.controller('ApplicationController', function($scope, $http) {
 	}
 	
 	$scope.showOnline = function(data){
-		$scope.allMembers = [];
+		//$scope.allMembers = [];
 		$http.get('/loadAllMembers', {}
     		).then(function(res){
     			$scope.allMembers = res.data;

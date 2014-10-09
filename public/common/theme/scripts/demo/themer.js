@@ -374,6 +374,7 @@ var primaryBgColorTargets =
 	".shop-client-products.list ul li a .glyphicons i",
 	".navbar.main .topnav > li.open.dd-1 .dropdown-menu > li:not(.profile):hover > a",
 	".social-large a.active, .social-large a:hover",
+	"#menu .appbrand1",
 	"#landing_1 .banner-1 .carousel-indicators li.active"
 ];
 var primaryTextColorTargets = 
@@ -395,6 +396,7 @@ var primaryTextColorTargets =
 	".menubar.links.primary ul li a",
 	".text-primary",
 	"#docs_icons .glyphicons i:before",
+	".glyphicons i:before",
 	".widget.widget-tabs-double-2 .widget-head ul li.active a i:before, .widget.widget-tabs-double-2 .widget-head ul li.active a",
 	".shop-client-products.product-details .form-horizontal .price",
 	"#menu .appbrand",
