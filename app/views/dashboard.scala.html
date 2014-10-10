@@ -4,11 +4,11 @@
 
 <div id="content1" class="innerLR">
 	<div class="row-fluid">
-		<div class="span9">
-			<h2 style="margin-bottom:2%;margin-top:2%;">Dashboard <span>for your next cool web APP</span></h2>
+		<div class="span6">
+			<h2 style="margin-bottom:2%;margin-top:2%;">Dashboard</h2>
 		</div>
-		<div class="span3">
-			<input style="margin-top:7%;height:initial;width:initial;float:right;" type="text" ng-model="symForQuote" id="symbolsearch1" placeholder="Get Quotes">
+		<div class="span6">
+			<input style="margin-top:2%;height:initial;width:initial;float:right;" type="text" ng-model="symForQuote" id="symbolsearch1" placeholder="Get Quotes">
 		</div>
 	</div>	
 	<div class="tickertape">
@@ -20,10 +20,10 @@
 		<div class="widget widget-activity margin-none">
 	
 			<div class="widget-head" style="padding:0px;">
-				<h4 class="heading">Wishlist</h4>
-				<div style="float:right;width:50%;padding-top:0.5%;">
-					<a style="float:right;margin-top:1%;margin-left:3%;" class="glyphicons no-js refresh"><i ng-click="refreshAll()"></i></a>
-					<input type="text" style="float:right;width:80%;height:initial;" ng-model="text" id="symbolsearch" placeholder="Enter symbol">
+				<h4 class="heading span3">Wishlist</h4>
+				<div class="span9" style="float:right;padding-top:0.5%;">
+					<a style="float:right;margin-top:1%;margin-left:3%;" class="glyphicons no-js refresh span1"><i ng-click="refreshAll()"></i></a>
+					<input class="span8" type="text" style="float:right;height:initial;" ng-model="text" id="symbolsearch" placeholder="Enter symbol">
 				</div>
 			</div>
 			
@@ -32,40 +32,40 @@
 				<div id="resultContainer" data-ng-repeat="result in results">
 								
 					<div class="row-fluid" ng-show="result.Change > 0">
-						<div class="span1" style="margin-top:2%;">
+						<div class="span1 span1image" style="margin-top:2%;">
 							<img src="/assets/images/up.jpg">
 						</div>
 						<div class="span11">
 						<div class="row-fluid">
 							<span id="name" class="span5" style="float: left;"><a data-toggle="modal" data-target="#quoteModal" data-ng-click="showQuote($index)" style="cursor:pointer;">{{result.Name}}</a></span>
 							<span id="date" class="span6" style="float: left;font-size: 10px;">{{result.Timestamp}}</span>
-							<span class="span1" style="float:right;"><a class="glyphicons no-js remove"><i ng-click="removeFromWishlist($index)"></i></a></span>
+							<span class="span1 span1glyph" style="float:right;"><a class="glyphicons no-js remove"><i ng-click="removeFromWishlist($index)"></i></a></span>
 						</div>
 						<div class="row-fluid">
 							<span id="prize" class="span5" style="font-weight: bolder;">${{result.LastPrice}}</span>	
 							<span id="change" class="span3" style="float: left;">{{result.Change | number:2}}</span>	
 							<span id="change_prcnt" class="span3" style="float: left;font-weight: bolder;">( {{result.ChangePercent | number:2}}% )</span>
-							<span class="span1" style="float:right;"><a class="glyphicons no-js refresh"><i ng-click="refreshQuote(result.Symbol, $index)"></i></a></span>
+							<span class="span1 span1glyph" style="float:right;"><a class="glyphicons no-js refresh"><i ng-click="refreshQuote(result.Symbol, $index)"></i></a></span>
 						</div>
 						</div>
 					<hr style="width:100%;">
 					</div>
 					
 					<div class="row-fluid" ng-show="result.Change < 0">
-						<div class="span1" style="margin-top:2%;">
+						<div class="span1 span1image" style="margin-top:2%;">
 							<img src="/assets/images/down.jpg">
 						</div>
 						<div class="span11">
 						<div class="row-fluid">
 							<span id="name" class="span5" style="float: left;"><a data-toggle="modal" data-target="#quoteModal" data-ng-click="showQuote($index)" style="cursor:pointer;">{{result.Name}}</a></span>
 							<span id="date" class="span6" style="float: left;font-size: 10px;">{{result.Timestamp}}</span>
-							<span class="span1" style="float:right;"><a class="glyphicons no-js remove"><i ng-click="removeFromWishlist($index)"></i></a></span>
+							<span class="span1 span1glyph" style="float:right;"><a class="glyphicons no-js remove"><i ng-click="removeFromWishlist($index)"></i></a></span>
 						</div>
 						<div class="row-fluid">
 							<span id="prize" class="span5" style="font-weight: bolder;">${{result.LastPrice}}</span>	
 							<span id="change" class="span3" style="float: left;">{{result.Change | number:2}}</span>	
 							<span id="change_prcnt" class="span3" style="float: left;font-weight: bolder;">( {{result.ChangePercent | number:2}}% )</span>
-							<span class="span1" style="float:right;"><a class="glyphicons no-js refresh"><i ng-click="refreshQuote(result.Symbol, $index)"></i></a></span>
+							<span class="span1 span1glyph" style="float:right;"><a class="glyphicons no-js refresh"><i ng-click="refreshQuote(result.Symbol, $index)"></i></a></span>
 						</div>
 						</div>
 					<hr style="width:100%;">
@@ -167,7 +167,7 @@
 					</form>
 					Attachments:
 					<div class="row-fluid">
-						<div class="span10">
+						<div class="span8">
 						<div class="fileupload fileupload-new" data-provides="fileupload" style="float:left;">
 					  		<span class="btn btn-default btn-file">
 					  			<span class="fileupload-new">Select file</span>
@@ -178,8 +178,8 @@
 					  		<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">&times;</a>
 						</div>
 						</div>
-						<div class="span2">
-							<button id="send" class="btn btn-block btn-inverse">Send</button>
+						<div class="span4">
+							<button style="width:55px;float:right;" id="send" class="btn btn-block btn-inverse">Send</button>
 						</div>
 					</div>	
 				</div>
@@ -205,7 +205,7 @@
 	<!-- Modal body -->
 	<div class="modal-body" style="overflow: hidden;">
 		<span id="name" class="span6" style="font-size:15px;font-weight:bolder;">{{quoteResult.Name}}({{quoteResult.Symbol}})</span>
-		<div class="span6">
+		<div class="span6 span6modal">
 			<span style="width:50%;">
 				<span id="open" style="font-size:25px;font-weight:bolder;">{{quoteResult.LastPrice}}</span>
 				<span ng-show="quoteResult.Change > 0"><img style="width:5%;" src="/assets/images/StockIndexUp.png"></span>
@@ -215,7 +215,7 @@
 				<span ng-show="quoteResult.Change > 0" id="changePercent" style="font-size:20px;color:green;">({{quoteResult.ChangePercent | number:2}}%)</span>
 				<span ng-show="quoteResult.Change < 0" id="changePercent" style="font-size:20px;color:red;">({{quoteResult.ChangePercent | number:2}}%)</span>
 			</span>
-			<span id="timestamp" style="font-size:10px;width:50%;float:right;padding:1%;">{{quoteResult.Timestamp}}</span>
+			<span id="timestamp" style="font-size:10px;float:right;padding:1%;">{{quoteResult.Timestamp}}</span>
 		</div>	
 	</div>
 	<!-- // Modal body END -->
@@ -240,7 +240,7 @@
 				<div class="control-group">
 					<label style="float:left;" class="control-label">Volume:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.Volume}}</label>
-				</div>			
+				</div><hr>			
 			</div>
 			<div class="span6">
 				<div class="control-group">
@@ -258,7 +258,7 @@
 				<div class="control-group">
 					<label style="float:left;" class="control-label">Market Cap:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.MarketCap}}</label>
-				</div>			
+				</div><hr>			
 			</div>
 		</div>
 	
@@ -488,7 +488,7 @@ $(function() {
 			select: function( event, ui ) {
 				console.log(ui.item.item);
 				angular.element('#content1').scope().getQuote(ui.item.item);
-				$('#quoteModal').modal('toggle');
+				$('#quoteModal').modal('show');
 				$("span.label-info").html("You selected " + ui.item.label).fadeIn("fast");
 			},
 			open: function() {

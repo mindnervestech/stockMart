@@ -1,4 +1,4 @@
-var taskApp = angular.module('chatRoom', ['ngResource', 'ngRoute', 'angularFileUpload', 'ngDialog']);
+var taskApp = angular.module('chatRoom', ['ngResource', 'ngRoute', 'angularFileUpload', 'ngDialog', 'cgNotify']);
 
 
 taskApp.controller('ApplicationController', function($scope, $http) {
@@ -29,7 +29,7 @@ taskApp.controller('ApplicationController', function($scope, $http) {
 	
 });
 
-taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDialog) {
+taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDialog, notify) {
 	
 	$scope.loadAllChats = function(userId){
     	$scope.allChats = [];
@@ -63,16 +63,16 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
 	
 	$scope.downloadFile = function(cId){
 		console.log(cId);
-		$('#downloadModal').modal('toggle');
+		$('#downloadModal').modal('show');
 		$.fileDownload('/downloadFile', {
 			httpMethod: "POST",
 			data: {id:cId},
 			successCallback: function () {
-				$('#downloadModal').modal('toggle');
+				$('#downloadModal').modal('hide');
             },
             failCallback: function () {
-            	$('#downloadModal').modal('toggle');
-            	$('#errorModal').modal('toggle');
+            	$('#downloadModal').modal('hide');
+            	$('#errorModal').modal('show');
             }
 		});
 	}
@@ -95,13 +95,13 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
 				exchange: item.Exchange}
 				).then(function(res){
 					//console.log(res.data);
-					alert("added");
+					notify("Added to wishlist!");
 					$scope.getDataResult(res.data.symbol);
 				}, function(error){
 					
 				});
 		}else{
-			alert("already there.");
+			notify("already there.");
 		}
 	}
 	
@@ -149,7 +149,7 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDi
     	console.log($scope.results[index]);
     	$http.put('/removeFromWishlist',{name: $scope.results[index].Name}
     		).then(function(res){
-    			alert("deleted");
+    			notify("Removed from wishlist!");
     			$scope.results.splice(index,1);
     	    	//console.log($scope.results);
     		}, function(error){
@@ -225,7 +225,7 @@ taskApp.controller('MyAccountController', function($scope, $http, $timeout, $upl
 	
 });
 
-taskApp.controller('ChangePasswordController', function($scope, $http) {
+taskApp.controller('ChangePasswordController', function($scope, $http, notify) {
 	
 	$scope.selectedTab = 2;
 
@@ -233,7 +233,7 @@ taskApp.controller('ChangePasswordController', function($scope, $http) {
 		console.log($scope.pwd);
 		$http.post('/changePassword',{pwd: $scope.pwd}
 			).then(function(res){
-				console.log("success");
+				notify("Password changed successfully!");
 				document.getElementById("pwd").value = '';
 				document.getElementById("confPwd").value = '';
 			}, function(error){

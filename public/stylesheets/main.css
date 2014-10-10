@@ -1,0 +1,25 @@
+@media(max-width: 1025px){
+	.span5{
+	width:36% !important;
+	margin-left:0px !important;
+	}
+	.span1glyph{
+	width: 12% !important;
+	margin-left:0px !important;
+	}
+	.span6{
+	width: 48% !important;
+	}
+	.span3{
+	font-size:10px !important;
+	}
+	.span1image{
+	width: 6% !important;
+	}
+	#name{
+	font-size: 10px !important;
+	}
+	.span6modal{
+	width:90% !important;
+	}
+}
