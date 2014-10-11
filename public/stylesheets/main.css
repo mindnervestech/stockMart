@@ -22,4 +22,15 @@
 	.span6modal{
 	width:90% !important;
 	}
+	.span6heading{
+	width:64% !important;
+	font-size:13px !important;
+	}
+	.span6text{
+	width:33% !important;
+	}
+	.searchText{
+	font-size:10px !important;
+	margin-top:2% !important;
+	}
 }

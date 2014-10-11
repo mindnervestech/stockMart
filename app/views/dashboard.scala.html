@@ -20,10 +20,9 @@
 		<div class="widget widget-activity margin-none">
 	
 			<div class="widget-head" style="padding:0px;">
-				<h4 class="heading span3">Wishlist</h4>
-				<div class="span9" style="float:right;padding-top:0.5%;">
-					<a style="float:right;margin-top:1%;margin-left:3%;" class="glyphicons no-js refresh span1"><i ng-click="refreshAll()"></i></a>
-					<input class="span8" type="text" style="float:right;height:initial;" ng-model="text" id="symbolsearch" placeholder="Enter symbol">
+				<h4 class="heading span8 span6heading">Whitney Watch List:</h4>
+				<div class="span4 span6text" style="float:right;padding-top:0.5%;">
+					<input class="span12 searchText" type="text" style="float:right;height:initial;margin-rigtht:2% !important;" ng-model="text" id="symbolsearch" placeholder="Enter symbol">
 				</div>
 			</div>
 			
@@ -33,19 +32,19 @@
 								
 					<div class="row-fluid" ng-show="result.Change > 0">
 						<div class="span1 span1image" style="margin-top:2%;">
-							<img src="/assets/images/up.jpg">
+							<img src="/assets/images/StockIndexUp.png">
 						</div>
 						<div class="span11">
 						<div class="row-fluid">
 							<span id="name" class="span5" style="float: left;"><a data-toggle="modal" data-target="#quoteModal" data-ng-click="showQuote($index)" style="cursor:pointer;">{{result.Name}}</a></span>
 							<span id="date" class="span6" style="float: left;font-size: 10px;">{{result.Timestamp}}</span>
-							<span class="span1 span1glyph" style="float:right;"><a class="glyphicons no-js remove"><i ng-click="removeFromWishlist($index)"></i></a></span>
+							<span class="span1 span1glyph" style="float:right;"><img ng-click="removeFromWishlist($index)" src="/assets/images/remove.png"></span>
 						</div>
 						<div class="row-fluid">
 							<span id="prize" class="span5" style="font-weight: bolder;">${{result.LastPrice}}</span>	
 							<span id="change" class="span3" style="float: left;">{{result.Change | number:2}}</span>	
 							<span id="change_prcnt" class="span3" style="float: left;font-weight: bolder;">( {{result.ChangePercent | number:2}}% )</span>
-							<span class="span1 span1glyph" style="float:right;"><a class="glyphicons no-js refresh"><i ng-click="refreshQuote(result.Symbol, $index)"></i></a></span>
+							<span class="span1 span1glyph" style="float:right;"><img style="width:80%;margin-left:8%;" ng-click="refreshQuote(result.Symbol, $index)" src="/assets/images/refresh.png"></span>
 						</div>
 						</div>
 					<hr style="width:100%;">
@@ -53,19 +52,19 @@
 					
 					<div class="row-fluid" ng-show="result.Change < 0">
 						<div class="span1 span1image" style="margin-top:2%;">
-							<img src="/assets/images/down.jpg">
+							<img src="/assets/images/StockIndexDown.png">
 						</div>
 						<div class="span11">
 						<div class="row-fluid">
 							<span id="name" class="span5" style="float: left;"><a data-toggle="modal" data-target="#quoteModal" data-ng-click="showQuote($index)" style="cursor:pointer;">{{result.Name}}</a></span>
 							<span id="date" class="span6" style="float: left;font-size: 10px;">{{result.Timestamp}}</span>
-							<span class="span1 span1glyph" style="float:right;"><a class="glyphicons no-js remove"><i ng-click="removeFromWishlist($index)"></i></a></span>
+							<span class="span1 span1glyph" style="float:right;"><img ng-click="removeFromWishlist($index)" src="/assets/images/remove.png"></span>
 						</div>
 						<div class="row-fluid">
 							<span id="prize" class="span5" style="font-weight: bolder;">${{result.LastPrice}}</span>	
 							<span id="change" class="span3" style="float: left;">{{result.Change | number:2}}</span>	
 							<span id="change_prcnt" class="span3" style="float: left;font-weight: bolder;">( {{result.ChangePercent | number:2}}% )</span>
-							<span class="span1 span1glyph" style="float:right;"><a class="glyphicons no-js refresh"><i ng-click="refreshQuote(result.Symbol, $index)"></i></a></span>
+							<span class="span1 span1glyph" style="float:right;"><img style="width:80%;margin-left:8%;" ng-click="refreshQuote(result.Symbol, $index)" src="/assets/images/refresh.png"></span>
 						</div>
 						</div>
 					<hr style="width:100%;">
@@ -85,7 +84,7 @@
 		<div class="widget widget-chat margin-none">
 		
 			<div class="widget-head">
-				<h4 class="heading">Chats</h4>
+				<h4 class="heading">Chat:</h4>
 			</div>
 			
 			<div class="widget-body" style="height:385px;">
@@ -417,6 +416,7 @@ $(function() {
 		.focus()
 		.autocomplete({
 			source: function(request,response) {
+				if($("#symbolsearch").val().length > 0){
 				$.ajax({
 					beforeSend: function(){ 
 						$("span.help-inline").show();
@@ -438,7 +438,7 @@ $(function() {
 						$("span.help-inline").hide();
 					}
 				});
-			},
+				}},
 			minLength: 0,
 			select: function( event, ui ) {
 				console.log(ui.item.item);
@@ -457,11 +457,11 @@ $(function() {
 
 
 $(function() {
-
 	$("#symbolsearch1")
 		.focus()
 		.autocomplete({
 			source: function(request,response) {
+				if($("#symbolsearch1").val().length > 0){
 				$.ajax({
 					beforeSend: function(){ 
 						$("span.help-inline").show();
@@ -483,7 +483,7 @@ $(function() {
 						$("span.help-inline").hide();
 					}
 				});
-			},
+				}},
 			minLength: 0,
 			select: function( event, ui ) {
 				console.log(ui.item.item);
@@ -497,8 +497,7 @@ $(function() {
 			close: function() {
 				//$(this).removeClass("ui-corner-top").addClass("ui-corner-all");
 			}
-		})
-	;
+		});
 });
 
 </script>	
