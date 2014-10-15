@@ -293,10 +293,10 @@ public class Application extends Controller {
     	DynamicForm form = DynamicForm.form().bindFromRequest();
     	String name = form.get("name");
     	System.out.println("name:"+name);
-    	Wishlist wl = Wishlist.findByName(name);
     	User user = Application.getLocalUser(session());
+    	Wishlist wl = Wishlist.findByName(name, user.id);
     	user.removeFromWishlist(wl);
-    	return ok();
+       	return ok();
     }
     
     public static Result loadAllMembers(){

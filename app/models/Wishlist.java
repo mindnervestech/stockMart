@@ -33,8 +33,8 @@ public class Wishlist extends Model {
 		this.exchange = form.get("exchange");
 	}
 
-	public static Wishlist findByName(String name) {
-		return Wishlist.find.where().eq("name", name).findUnique();
+	public static Wishlist findByName(String name, Long uid) {
+		return Wishlist.find.where().eq("name", name).eq("user_id", uid).findUnique();
 	}
     
 
