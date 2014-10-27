@@ -1,4 +1,4 @@
-var taskApp = angular.module('chatRoom', ['ngResource', 'ngRoute', 'angularFileUpload', 'ngDialog', 'cgNotify']);
+var taskApp = angular.module('chatRoom', ['ngResource', 'ngRoute', 'angularFileUpload', 'cgNotify']);
 
 
 taskApp.controller('ApplicationController', function($scope, $http) {
@@ -29,7 +29,7 @@ taskApp.controller('ApplicationController', function($scope, $http) {
 	
 });
 
-taskApp.controller('DashboardController', function($scope, $http, $timeout, ngDialog, notify) {
+taskApp.controller('DashboardController', function($scope, $http, $timeout, notify) {
 	
 	$scope.loadAllChats = function(userId){
     	$scope.allChats = [];

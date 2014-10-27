@@ -52,7 +52,6 @@ new Markit.QuoteService("AAPL", function(jsonResult) {
     }
 
     //If all goes well, your quote will be here.
-    console.log(jsonResult);
 
     //Now proceed to do something with the data.
     //$("h1").first().text(jsonResult.Name);
