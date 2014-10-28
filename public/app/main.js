@@ -40,7 +40,7 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
 					for(var i=0; i<$scope.allChats.length; i++){
 						var d = new Date($scope.allChats[i].messageTime);
 		            	var res = d.toString().split(" ");
-		            	$scope.allChats[i].messageTime = res[0] + " " + res[1] + " " + res[2] + " " + res[4] + " IST " + res[3];
+		            	$scope.allChats[i].messageTime = res[0] + " " + res[1] + " " + res[2] + " " + res[4] + " " + res[3];
 		            	$timeout(function(){
 		            		var scrollTo_val = $('#inner-content-div1').prop('scrollHeight') + 'px';
 		            		$('#inner-content-div1').slimScroll({ scrollTo : scrollTo_val });
@@ -123,6 +123,9 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
     	//console.log("ANGULAR JS"+symbol);
     	new Markit.QuoteService(symbol, function(jsonResult) {
     		$scope.$apply(function(){
+    			console.log(jsonResult);
+    			var res1 = jsonResult.Timestamp.split(" ");
+    			jsonResult.Timestamp = res1[0] + " " + res1[1] + " " + res1[2] + " " + res1[3] + " " + res1[5];
     			$scope.results.push(jsonResult);
     		});
     		console.log($scope.results);
@@ -133,6 +136,8 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
     	console.log("ANGULAR JS"+symbol);
     	new Markit.QuoteService(symbol, function(jsonResult) {
     		$scope.$apply(function(){
+    			var res1 = jsonResult.Timestamp.split(" ");
+    			jsonResult.Timestamp = res1[0] + " " + res1[1] + " " + res1[2] + " " + res1[3] + " " + res1[5];
     			$scope.results[index] = jsonResult;
     		});
     		console.log($scope.results);
