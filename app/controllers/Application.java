@@ -277,25 +277,26 @@ public class Application extends Controller {
     
     
 	public static Result addToWishlist(){
-    	User user = Application.getLocalUser(session());
     	DynamicForm form = DynamicForm.form().bindFromRequest();
     	Wishlist wishlist = new Wishlist(form);
-    	user.addToWishlist(wishlist);
-    	return ok(Json.toJson(wishlist));
+    	if(Wishlist.find.where().eq("symbol", wishlist.symbol).findUnique() == null)
+    	{
+    		wishlist.save();
+    		return ok(Json.toJson(wishlist));
+    	}else{
+    		return status(400);
+    	}
     }
     
     public static Result loadAllWishlist(){
-    	User user = Application.getLocalUser(session());
-    	return ok(Json.toJson(user.wishlists));
+    	return ok(Json.toJson(Wishlist.find.all()));
     }
     
     public static Result removeFromWishlist(){
     	DynamicForm form = DynamicForm.form().bindFromRequest();
     	String name = form.get("name");
-    	System.out.println("name:"+name);
-    	User user = Application.getLocalUser(session());
-    	Wishlist wl = Wishlist.findByName(name, user.id);
-    	user.removeFromWishlist(wl);
+    	Wishlist wl = Wishlist.findByName(name);
+    	wl.delete();
        	return ok();
     }
     

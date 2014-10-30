@@ -29,7 +29,7 @@ taskApp.controller('ApplicationController', function($scope, $http) {
 	
 });
 
-taskApp.controller('DashboardController', function($scope, $http, $timeout, notify) {
+taskApp.controller('DashboardController', function($scope, $http, $timeout, notify, $interval) {
 	
 	$scope.loadAllChats = function(userId){
     	$scope.allChats = [];
@@ -78,34 +78,23 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
 	}
 	
 	
-	//$scope.allSymbols = [];
-	
 	$scope.addToWishlist = function(item){
 		console.log(item);
-		var flag = true;
-		for(var i=0;i<$scope.results.length;i++){
-			if(angular.equals($scope.results[i].Symbol, item.Symbol)){
-				flag = false;
-				break;
-			}
-		}
-		if(flag == true){
-			$http.post('/addToWishlist',{name: item.Name,
-				symbol: item.Symbol,
-				exchange: item.Exchange}
-				).then(function(res){
-					//console.log(res.data);
-					notify("Added to wishlist!");
-					$scope.getDataResult(res.data.symbol);
-				}, function(error){
-					
-				});
-		}else{
-			notify("already there.");
-		}
+		$http.post('/addToWishlist',{name: item.Name,
+			symbol: item.Symbol,
+			exchange: item.Exchange}
+			).then(function(res){
+				notify("Added to wishlist!");
+				$scope.getDataResult(res.data.symbol);
+			}, function(error){
+				notify("Already added in the wishlist.");
+				$scope.results = [];
+		    	$scope.loadAllWishlist();
+			});
 	}
 	
 	$scope.loadAllWishlist = function(){
+		$scope.results = [];
 		$http.get('/loadAllWishlist',{}
 			).then(function(res){
 				//console.log(res.data);
@@ -117,8 +106,10 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
 			});
 	}
     
-    $scope.results = [];
-    
+	$interval($scope.loadAllWishlist, 30000);
+	
+	$scope.results = [];
+	
     $scope.getDataResult = function(symbol){
     	//console.log("ANGULAR JS"+symbol);
     	new Markit.QuoteService(symbol, function(jsonResult) {

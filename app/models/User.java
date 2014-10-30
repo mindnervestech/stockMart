@@ -36,19 +36,6 @@ public class User extends Model{
     @Lob
     public String userPic;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    public List<Wishlist> wishlists;
-    
-    public List<Wishlist> getWishlist() {
-		return wishlists;
-	}
-
-
-	public void setWishlist(List<Wishlist> wishlist) {
-		this.wishlists = wishlist;
-	}
-
-
 	public String getStatus() {
 		return status;
 	}
@@ -132,21 +119,5 @@ public class User extends Model{
 	public void setUserPic(String imageDataString) {
 		this.userPic = imageDataString;
 	}
-
-
-	public void addToWishlist(Wishlist wishlist) {
-		if(this.wishlists == null)
-			this.wishlists = new ArrayList<>();
-		this.wishlists.add(wishlist);
-		this.update();
-	}
-
-
-	public void removeFromWishlist(Wishlist wl) {
-		this.wishlists.remove(wl);
-		this.update();
-		wl.delete();
-	}
-    
 
 }
