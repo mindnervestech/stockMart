@@ -115,6 +115,9 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
     	new Markit.QuoteService(symbol, function(jsonResult) {
     		$scope.$apply(function(){
     			console.log(jsonResult);
+    			jsonResult.MarketCap=jsonResult.MarketCap/1000000;
+        		var tmp =moment(jsonResult.MSDate);  
+        		jsonResult.MSDate=tmp.format("YYYY-MM-DD");
     			var res1 = jsonResult.Timestamp.split(" ");
     			jsonResult.Timestamp = res1[0] + " " + res1[1] + " " + res1[2] + " " + res1[3] + " " + res1[5];
     			$scope.results.push(jsonResult);
@@ -127,6 +130,9 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
     	console.log("ANGULAR JS"+symbol);
     	new Markit.QuoteService(symbol, function(jsonResult) {
     		$scope.$apply(function(){
+    			jsonResult.MarketCap=jsonResult.MarketCap/1000000;
+        		var tmp =moment(jsonResult.MSDate);  
+        		jsonResult.MSDate=tmp.format("YYYY-MM-DD");
     			var res1 = jsonResult.Timestamp.split(" ");
     			jsonResult.Timestamp = res1[0] + " " + res1[1] + " " + res1[2] + " " + res1[3] + " " + res1[5];
     			$scope.results[index] = jsonResult;
@@ -157,10 +163,12 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
     	console.log(item);
     	$scope.item = angular.copy(item);
     	new Markit.QuoteService(item.Symbol, function(jsonResult) {
+    		jsonResult.MarketCap=jsonResult.MarketCap/1000000;
+    		var tmp =moment(jsonResult.MSDate);  
+    		jsonResult.MSDate=tmp.format("YYYY-MM-DD");
     		$scope.$apply(function(){
     			$scope.quoteResult = jsonResult;
     		});
-    		console.log($scope.quoteResult);
     	});
     
     }

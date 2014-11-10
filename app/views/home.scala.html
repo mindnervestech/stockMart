@@ -90,6 +90,8 @@
 	<script src="@routes.Assets.at("app/bower_components/angular/angular.min.js")"></script>
 	<script src="@routes.Assets.at("app/bower_components/angular-resource/angular-resource.js")"></script>
     <script type="text/javascript" src="@routes.Assets.at("app/bower_components/angular-route/angular-route.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("app/bower_components/angular-moment/angular-moment.js")"></script>
+	<script type="text/javascript" src="@routes.Assets.at("app/bower_components/moment/moment.js")"></script>
 	
 	<script src='@routes.Assets.at("app/bower_components/ng-file-upload/angular-file-upload-shim.min.js")'></script>
 	<script src='@routes.Assets.at("app/bower_components/ng-file-upload/angular-file-upload.min.js")'></script>    
@@ -163,6 +165,16 @@
 				<!-- // Sidebar Profile END -->
 				
 				<ul class="menu-0">
+					<li class="active"><span style="padding-left:3%;font-size:15px;float:left;">My Portfolio</span><a data-toggle="modal" data-target="#myPortSettings" style="float:right;" class="glyphicons cogwheel single-icon"><i></i></a></li>
+					<li ng-repeat="company in allCompanies">
+						<div class="row-fluid" style="padding:2%;">
+							<span id="myPortfolio"></span>
+						</div>
+						
+					</li>
+				</ul>
+				
+				<ul class="menu-0">
 					<li class="active"><a><i></i><span style="padding-left:3%;font-size:15px;">The Team</span></a></li>
 					<li ng-repeat="member in allMembers">
 						<div class="row-fluid" style="padding:2%;">
@@ -210,6 +222,31 @@
 	</div>
 </div>
 <!-- // Themer END -->	
+
+<!-- Modal -->
+<div class="modal hide fade" id="myPortSettings">
+	
+	<!-- Modal heading -->
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	</div>
+	<!-- // Modal heading END -->
+	
+	<!-- Modal body -->
+	<div class="modal-body" style="overflow: hidden;">
+		
+	</div>
+	<!-- // Modal body END -->
+	
+	<!-- Modal footer -->
+	<div class="modal-footer">
+	
+	</div>
+	<!-- // Modal footer END -->
+	
+</div>
+<!-- // Modal END -->	
+
 	
 			
 </body>
