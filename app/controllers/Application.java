@@ -27,6 +27,7 @@ import javax.imageio.ImageIO;
 
 import models.Chat;
 import models.ChatRoom;
+import models.Portfolio;
 import models.User;
 import models.Wishlist;
 
@@ -341,5 +342,26 @@ public class Application extends Controller {
 		response().setCookie("fileDownload", "true");
 		return ok(new File(FILE_PATH + File.separator + "chat_" + d.getTime() + ".jpg"));
     }    
+    
+    public static Result addToPortfolio(){
+    	DynamicForm form = DynamicForm.form().bindFromRequest();
+    	Portfolio p = new Portfolio();
+    	p.setName(form.get("name"));
+    	p.setSymbol(form.get("symbol"));
+    	p.setNoOfShares(Long.parseLong(form.get("noOfShares")));
+    	p.save();
+    	return ok(Json.toJson(Portfolio.find.all()));
+    }
+    
+    public static Result loadPortfolio(){
+    	return ok(Json.toJson(Portfolio.find.all()));
+    }
+    
+    public static Result updatePortfolio(){
+    	DynamicForm form = DynamicForm.form().bindFromRequest();
+    	Portfolio p = Portfolio.find.byId(Long.parseLong(form.get("id")));
+    	p.delete();
+    	return ok(Json.toJson(Portfolio.find.all()));
+    }
 
 }

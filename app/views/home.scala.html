@@ -129,7 +129,7 @@
 </head>
 
 	
-<body ng-app="chatRoom" ng-controller="ApplicationController" ng-init="getUserPic(@localUser.id)">
+<body ng-app="chatRoom" ng-controller="ApplicationController" ng-init="getUserPic(@localUser.id);loadPortfolio()">
 
 	<div class="container-fluid fixed menu-left" style="border-bottom: 1px solid #d8d8d8;">
 	
@@ -165,12 +165,11 @@
 				<!-- // Sidebar Profile END -->
 				
 				<ul class="menu-0">
-					<li class="active"><span style="padding-left:3%;font-size:15px;float:left;">My Portfolio</span><a data-toggle="modal" data-target="#myPortSettings" style="float:right;" class="glyphicons cogwheel single-icon"><i></i></a></li>
-					<li ng-repeat="company in allCompanies">
-						<div class="row-fluid" style="padding:2%;">
+					<li class="active"><a style="float:left;width:179px;"><span style="padding-left:3%;font-size:15px;float:left;">My Portfolio</span></a><a data-toggle="modal" data-target="#myPortSettings" style="float:right;" class="glyphicons cogwheel single-icon"><i></i></a></li>
+					<li>
+						<div class="row-fluid">
 							<span id="myPortfolio"></span>
 						</div>
-						
 					</li>
 				</ul>
 				
@@ -187,8 +186,6 @@
 					</li>
 				</ul>
 		
-				
-			
 				
 				<div class="clearfix"></div>
 				<div class="separator bottom"></div>
@@ -234,13 +231,62 @@
 	
 	<!-- Modal body -->
 	<div class="modal-body" style="overflow: hidden;">
-		
+		<div class="widget-body">
+			<!-- Row -->
+			<div class="row-fluid">
+				<!-- Column -->
+				<div class="span12">
+					<!-- Group -->
+					<div class="control-group span5" style="float:left;margin-bottom:0px;">
+						<label class="control-label">Company Name:</label>
+						<div class="controls">
+							<input type="text" id="symSearch" class="span10" />
+						</div>
+					</div>
+					<!-- // Group END -->
+					
+					<!-- Group -->
+					<div class="control-group span5" style="float:left;margin-bottom:0px;">
+						<label class="control-label">No. of Shares:</label>
+						<div class="controls">
+							<input type="text" id="noOfShares" ng-model="noOfShares" class="span10" />
+						</div>
+					</div>
+					<!-- // Group END -->
+					
+					<!-- Group -->
+					<div class="control-group span2" style="float:left;margin-bottom:0px;margin-top:23px;">
+						<div class="controls">
+							<button type="submit" ng-click="addToPortfolio()" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Add</button>
+						</div>
+					</div>
+					<!-- // Group END -->
+					
+				</div>
+			</div>
 	</div>
 	<!-- // Modal body END -->
 	
 	<!-- Modal footer -->
 	<div class="modal-footer">
-	
+		<table class="dynamicTable table table-striped table-bordered table-condensed">
+		
+			<thead>
+				<tr>
+					<th>Company Name</th>
+					<th>No. of Shares</th>
+					<th style="width:10%;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="company in allCompanies">
+					<td>{{company.name}}</td>
+					<td>{{company.noOfShares}}</td>
+					<td><a class="glyphicons delete" ng-click="updatePortfolio(company)"><i></i></a></td>
+				</tr>
+			</tbody>
+		
+		</table>
 	</div>
 	<!-- // Modal footer END -->
 	
@@ -250,5 +296,57 @@
 	
 			
 </body>
+<style>
+.ui-menu{
+position:absolute;
+z-index:100000;
+}
+</style>
+<script>
+
+$(function() {
+	$("#symSearch")
+		.focus()
+		.autocomplete({
+			source: function(request,response) {
+				if($("#symSearch").val().length > 0){
+				$.ajax({
+					beforeSend: function(){ 
+						$("span.help-inline").show();
+						$("span.label-info").empty().hide();
+					},
+					url: "http://dev.markitondemand.com/api/v2/Lookup/jsonp",
+					dataType: "jsonp",
+					data: {
+						input: request.term
+					},
+					success: function(data) {
+						response( $.map(data, function(item) {
+							return {
+								label: item.Name + " (" +item.Exchange+ ")",
+								value: item.Symbol,
+								item: item
+							}
+						}));
+						$("span.help-inline").hide();
+					}
+				});
+				}},
+			minLength: 0,
+			select: function( event, ui ) {
+				angular.element('#myPortSettings').scope().company = ui.item.item;
+				$("span.label-info").html("You selected " + ui.item.label).fadeIn("fast");
+			},
+			open: function() {
+				//$(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+			},
+			close: function() {
+				//$(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+			}
+		});
+});
+
+
+</script>
 
 

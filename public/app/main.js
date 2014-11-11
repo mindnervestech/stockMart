@@ -1,7 +1,7 @@
 var taskApp = angular.module('chatRoom', ['ngResource', 'ngRoute', 'angularFileUpload', 'cgNotify']);
 
 
-taskApp.controller('ApplicationController', function($scope, $http) {
+taskApp.controller('ApplicationController', function($scope, $http, notify) {
 		
 	$scope.getUserPic = function(uId){
 		console.log(uId);
@@ -25,6 +25,59 @@ taskApp.controller('ApplicationController', function($scope, $http) {
 		    }, function(error){
     			
     		});
+	}
+	
+	$scope.allCompanies = [];
+	$scope.portfolioURL = "http://widgets.macroaxis.com/widgets/url.jsp?t=44";
+	$scope.loadPortfolio = function(){
+		$http.get('/loadPortfolio',{}
+			).then(function(res){
+				$scope.allCompanies = res.data;
+				if($scope.allCompanies.length > 0){
+					$scope.portfolioURL = "http://widgets.macroaxis.com/widgets/url.jsp?t=44&s=";
+					for(var i=0; i<$scope.allCompanies.length;i++){
+						if(i<$scope.allCompanies.length-1){
+							$scope.portfolioURL = $scope.portfolioURL + $scope.allCompanies[i].symbol + ":" + $scope.allCompanies[i].noOfShares + ",";  
+						}else{
+							$scope.portfolioURL = $scope.portfolioURL + $scope.allCompanies[i].symbol + ":" + $scope.allCompanies[i].noOfShares;
+						}
+					}
+					console.log($scope.portfolioURL);
+				}
+				var script1 = document.createElement( 'script' );
+				script1.type = 'text/javascript';
+				script1.src = $scope.portfolioURL;
+				$("#myPortfolio").append(script1);
+			}, function(error){
+				
+			});
+	}
+	
+	$scope.company;
+	$scope.noOfShares;
+	$scope.addToPortfolio = function(){
+		console.log($scope.company);
+		$http.post('/addToPortfolio',{name:$scope.company.Name,
+			symbol:$scope.company.Symbol,
+			noOfShares:$scope.noOfShares}
+			).then(function(res){
+				$scope.loadPortfolio();
+				document.getElementById("symSearch").value = "";
+				document.getElementById("noOfShares").value = "";
+				notify("Portfolio updated!");
+			}, function(error){
+				
+			});
+	}
+	
+	$scope.updatePortfolio = function(company){
+		$http.put('/updatePortfolio',{id:company.id}
+			).then(function(res){
+				$scope.loadPortfolio();
+				notify("Portfolio updated!");
+			}, function(error){
+				
+			});
 	}
 	
 });
