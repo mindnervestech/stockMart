@@ -1,7 +1,7 @@
 var taskApp = angular.module('chatRoom', ['ngResource', 'ngRoute', 'angularFileUpload', 'cgNotify']);
 
 
-taskApp.controller('ApplicationController', function($scope, $http, notify) {
+taskApp.controller('ApplicationController', function($scope, $http, notify, $interpolate) {
 		
 	$scope.getUserPic = function(uId){
 		console.log(uId);
@@ -28,26 +28,33 @@ taskApp.controller('ApplicationController', function($scope, $http, notify) {
 	}
 	
 	$scope.allCompanies = [];
-	$scope.portfolioURL = "http://widgets.macroaxis.com/widgets/url.jsp?t=44";
+	
 	$scope.loadPortfolio = function(){
+		//$scope.portfolioURL = "http://widgets.macroaxis.com/widgets/partnerWatchlistBarsSnap.jsp?gia=t&amp;tid=123&amp;t=44&amp;s="	
+		$scope.portfolioURL="";
 		$http.get('/loadPortfolio',{}
 			).then(function(res){
 				$scope.allCompanies = res.data;
 				if($scope.allCompanies.length > 0){
-					$scope.portfolioURL = "http://widgets.macroaxis.com/widgets/url.jsp?t=44&s=";
-					for(var i=0; i<$scope.allCompanies.length;i++){
+					$scope.portfolioURL = "http://widgets.macroaxis.com/widgets/partnerWatchlistBarsSnap.jsp?gia=t&amp;tid=123&amp;t=44&amp;s="	
+						for(var i=0; i<$scope.allCompanies.length;i++){
 						if(i<$scope.allCompanies.length-1){
 							$scope.portfolioURL = $scope.portfolioURL + $scope.allCompanies[i].symbol + ":" + $scope.allCompanies[i].noOfShares + ",";  
 						}else{
-							$scope.portfolioURL = $scope.portfolioURL + $scope.allCompanies[i].symbol + ":" + $scope.allCompanies[i].noOfShares;
+							$scope.portfolioURL = $scope.portfolioURL  +$scope.allCompanies[i].symbol + ":" + $scope.allCompanies[i].noOfShares;
+							//console.log($scope.portfolioURL);
 						}
 					}
 					console.log($scope.portfolioURL);
 				}
-				var script1 = document.createElement( 'script' );
-				script1.type = 'text/javascript';
-				script1.src = $scope.portfolioURL;
-				$("#myPortfolio").append(script1);
+
+				var url4 = "<iframe bgcolor='#ffffff' id='macroaxis_watchlist_bars' name='macroaxis_watchlist_bars' marginheight='0' marginwidth='0' scrolling='NO' width='100%' frameborder='0' src='" + $scope.portfolioURL + "'></iframe>"; 
+				console.log(url4);
+				var formattedHTML = $interpolate(url4)($scope);
+//				var script1 = document.createElement( 'script' );
+//				script1.type = 'text/javascript';
+//				script1.src = $scope.portfolioURL;
+				$("#myPortfolio").html(formattedHTML);
 			}, function(error){
 				
 			});
@@ -92,8 +99,10 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
     			if($scope.allChats.length != 0){
 					for(var i=0; i<$scope.allChats.length; i++){
 						var d = new Date($scope.allChats[i].messageTime);
+						d.setHours(d.getHours()-10);
+						d.setMinutes(d.getMinutes()-30);
 		            	var res = d.toString().split(" ");
-		            	$scope.allChats[i].messageTime = res[0] + " " + res[1] + " " + res[2] + " " + res[4] + " " + res[3];
+		            	$scope.allChats[i].messageTime = res[1] + " " + res[2] + " " + res[4];
 		            	$timeout(function(){
 		            		var scrollTo_val = $('#inner-content-div1').prop('scrollHeight') + 'px';
 		            		$('#inner-content-div1').slimScroll({ scrollTo : scrollTo_val });
@@ -106,6 +115,12 @@ taskApp.controller('DashboardController', function($scope, $http, $timeout, noti
     }
 	
 	$scope.addChat = function(chat){
+		var d = new Date(chat.messageTime);
+		d.setHours(d.getHours()-10);
+		d.setMinutes(d.getMinutes()-30);
+		var res = d.toString().split(" ");
+		chat.messageTime = res[1] + " " + res[2] + " " + res[4];
+		console.log(chat.messageTime);
 		$scope.allChats.push(chat);
 		$timeout(function(){
     		var scrollTo_val = $('#inner-content-div1').prop('scrollHeight') + 'px';

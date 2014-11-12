@@ -51,9 +51,9 @@ public class ChatRoom extends UntypedActor {
             	// Send a Talk message to the room.
             	   System.out.println("event.get(type).asText() :::: "+event.get("type").asText());
             	   if(event.get("type").asText().equalsIgnoreCase("message")){
-                	   defaultRoom.tell(new Talk(username, event.get("text").asText(), event.get("type").asText(), new Date(), null));
+                	   defaultRoom.tell(new Talk(username, event.get("text").asText(), event.get("type").asText(), new Date().getTime(), null));
                    } else {
-                	   defaultRoom.tell(new Talk(username, null, event.get("type").asText(), new Date(), event.get("text").asText()));
+                	   defaultRoom.tell(new Talk(username, null, event.get("type").asText(), new Date().getTime(), event.get("text").asText()));
                    }
                } 
             });
@@ -150,7 +150,7 @@ public class ChatRoom extends UntypedActor {
             chat.messageType = talk.type;
             chat.attachement = talk.imageURL;
             chat.message = talk.text;
-            chat.messageTime = talk.time;
+            chat.messageTime = new Date(talk.time);
             chat.userId = User.findByUsername(talk.username);
             chat.save();
             cId = chat.id;
@@ -165,7 +165,7 @@ public class ChatRoom extends UntypedActor {
             event.put("message", talk.text);
             //event.put("attachment", talk.imageURL);
             event.put("type", talk.type);
-            event.put("time", talk.time.toString());
+            event.put("time", talk.time);
             event.put("userId", User.findByUsername(talk.username));
                         
             ArrayNode m = event.putArray("members");
@@ -202,9 +202,9 @@ public class ChatRoom extends UntypedActor {
         final String text;
         final String imageURL;
         final String type;
-        final Date time;
+        final long time;
         
-        public Talk(String username, String text, String type, Date time, String imageURL) {
+        public Talk(String username, String text, String type, long time, String imageURL) {
             this.username = username;
             this.text = text;
             this.type = type;

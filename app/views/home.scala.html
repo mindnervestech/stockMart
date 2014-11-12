@@ -166,14 +166,15 @@
 				
 				<ul class="menu-0">
 					<li class="active"><a style="float:left;width:179px;"><span style="padding-left:3%;font-size:15px;float:left;">My Portfolio</span></a><a data-toggle="modal" data-target="#myPortSettings" style="float:right;" class="glyphicons cogwheel single-icon"><i></i></a></li>
-					<li>
+					<li style="height: inherit;">
 						<div class="row-fluid">
-							<span id="myPortfolio"></span>
+							<span id="myPortfolio">
+							</span>
 						</div>
 					</li>
 				</ul>
 				
-				<ul class="menu-0">
+				<!-- <ul class="menu-0">
 					<li class="active"><a><i></i><span style="padding-left:3%;font-size:15px;">The Team</span></a></li>
 					<li ng-repeat="member in allMembers">
 						<div class="row-fluid" style="padding:2%;">
@@ -184,7 +185,7 @@
 						</div>
 						
 					</li>
-				</ul>
+				</ul> -->
 		
 				
 				<div class="clearfix"></div>
@@ -303,8 +304,8 @@ z-index:100000;
 }
 </style>
 <script>
-
 $(function() {
+	
 	$("#symSearch")
 		.focus()
 		.autocomplete({
