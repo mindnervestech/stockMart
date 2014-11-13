@@ -30,30 +30,29 @@ taskApp.controller('ApplicationController', function($scope, $http, notify, $int
 	$scope.allCompanies = [];
 	
 	$scope.loadPortfolio = function(){
-		//$scope.portfolioURL = "http://widgets.macroaxis.com/widgets/partnerWatchlistBarsSnap.jsp?gia=t&amp;tid=123&amp;t=44&amp;s="	
 		$scope.portfolioURL="";
 		$http.get('/loadPortfolio',{}
 			).then(function(res){
 				$scope.allCompanies = res.data;
+				var fHeight = 300;
 				if($scope.allCompanies.length > 0){
+					var fCount=$scope.allCompanies.length;
 					$scope.portfolioURL = "http://widgets.macroaxis.com/widgets/partnerWatchlistBarsSnap.jsp?gia=t&amp;tid=123&amp;t=44&amp;s="	
 						for(var i=0; i<$scope.allCompanies.length;i++){
 						if(i<$scope.allCompanies.length-1){
 							$scope.portfolioURL = $scope.portfolioURL + $scope.allCompanies[i].symbol + ":" + $scope.allCompanies[i].noOfShares + ",";  
 						}else{
 							$scope.portfolioURL = $scope.portfolioURL  +$scope.allCompanies[i].symbol + ":" + $scope.allCompanies[i].noOfShares;
-							//console.log($scope.portfolioURL);
 						}
 					}
 					console.log($scope.portfolioURL);
 				}
-
-				var url4 = "<iframe bgcolor='#ffffff' id='macroaxis_watchlist_bars' name='macroaxis_watchlist_bars' marginheight='0' marginwidth='0' scrolling='NO' width='100%' frameborder='0' src='" + $scope.portfolioURL + "'></iframe>"; 
-				console.log(url4);
+				if(isNaN(fCount)){
+					fCount=0;
+					}				
+				fHeight= fHeight + (fCount*10);
+				var url4 = "<iframe bgcolor='#ffffff' id='macroaxis_watchlist_bars' name='macroaxis_watchlist_bars' marginheight='0' marginwidth='0' scrolling='NO' width='100%' height='" + fHeight +"px' frameborder='0' src='" + $scope.portfolioURL + "'></iframe>"; 
 				var formattedHTML = $interpolate(url4)($scope);
-//				var script1 = document.createElement( 'script' );
-//				script1.type = 'text/javascript';
-//				script1.src = $scope.portfolioURL;
 				$("#myPortfolio").html(formattedHTML);
 			}, function(error){
 				

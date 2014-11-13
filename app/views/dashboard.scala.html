@@ -202,7 +202,7 @@
 				<span ng-show="quoteResult.Change > 0" id="changePercent" style="font-size:20px;color:green;">({{quoteResult.ChangePercent | number:2}}%)</span>
 				<span ng-show="quoteResult.Change < 0" id="changePercent" style="font-size:20px;color:red;">({{quoteResult.ChangePercent | number:2}}%)</span>
 			</span>
-			<span id="timestamp" style="font-size:10px;float:right;padding:1%;">{{quoteResult.Timestamp}}</span>
+			<!-- <span id="timestamp" style="font-size:10px;float:right;padding:1%;">{{quoteResult.Timestamp}}</span> -->
 		</div>	
 	</div>
 	<!-- // Modal body END -->
@@ -211,39 +211,39 @@
 	<div class="modal-footer">
 		
 		<div class="row-fluid">
-			<div class="span6">
+			<div class="span5">
 				<div class="control-group">
-					<label style="float:left;" class="control-label">Open:</label>
+					<label style="float:left;font-weight:900;" class="control-label">Open:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.Open}}</label>
 				</div><hr>
 				<div class="control-group">
-					<label style="float:left;" class="control-label">High:</label>
+					<label style="float:left;font-weight:900;" class="control-label">High:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.High}}</label>
 				</div><hr>
 				<div class="control-group">
-					<label style="float:left;" class="control-label">Low:</label>
+					<label style="float:left;font-weight:900;" class="control-label">Low:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.Low}}</label>
 				</div><hr>
 				<div class="control-group">
-					<label style="float:left;" class="control-label">Volume:</label>
+					<label style="float:left;font-weight:900;" class="control-label">Volume:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.Volume}}</label>
 				</div><hr>			
 			</div>
-			<div class="span6">
+			<div style="float:right;" class="span5" >
 				<div class="control-group">
-					<label style="float:left;" class="control-label">Change YTD:</label>
+					<label style="float:left;font-weight:900;" class="control-label">Change YTD:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.ChangeYTD | number:2}}</label>
 				</div><hr>
 				<div class="control-group">
-					<label style="float:left;" class="control-label">Change YTD(%):</label>
+					<label style="float:left;font-weight:900;" class="control-label">Change YTD(%):</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.ChangePercentYTD | number:2}}%</label>
 				</div><hr>
-				<div class="control-group">
+				<!-- <div class="control-group">
 					<label style="float:left;" class="control-label">MS Date:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.MSDate}}</label>
-				</div><hr>
+				</div><hr> -->
 				<div class="control-group">
-					<label style="float:left;" class="control-label">Market Cap:</label>
+					<label style="float:left;font-weight:900;" class="control-label">Market Cap:</label>
 					<label style="font-weight:900;" class="control-label">{{quoteResult.MarketCap | number:2}}MN</label>
 				</div><hr>			
 			</div>
@@ -312,7 +312,7 @@ $(document).ready(function(){
 	script.type = 'text/javascript';
 	script.src = "http://widgets.macroaxis.com/widgets/url.jsp?t=42&s=goog,msft,ctsh,aapl,yhoo,amzn,baba";
 	$("#my_xss_magic").append(script);
-});
+}); 
 
 
 $(function() {

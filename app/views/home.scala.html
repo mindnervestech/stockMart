@@ -156,9 +156,9 @@
 					<a class="img" href="#/myAccount" style="border-bottom:1px solid #d8d8d8;"><img style="height:100%;width:100%;" data-ng-src="{{userImage}}" alt="Avatar" /></a>
 					<span>
 						<ul>
-							<li><a href="#/myAccount" class="glyphicons lock"><i></i>Account</a></li>
-							<li><a href="#/changePass" class="glyphicons keys"><i></i>Password</a></li>
-							<li><a href="@routes.Application.signOut" class="glyphicons eject"><i></i>Logout</a></li>
+							<li style="border-bottom: 0px solid #fafafb;"><button style="width: 80%;"><a href="#/myAccount" class="glyphicons lock" style="background: transparent;border: 0px solid #d8d8d8;"><i></i>Account</a></button></li>
+							<li style="border-bottom: 0px solid #fafafb;"><button style="width: 80%;"><a href="#/changePass" class="glyphicons keys" style="background: transparent;border: 0px solid #d8d8d8;"><i></i>Password</a></button></li>
+							<li style="border-bottom: 0px solid #fafafb;"><button style="width: 80%;"><a href="@routes.Application.signOut" class="glyphicons eject" style="background: transparent;border: 0px solid #d8d8d8;"><i></i>Logout</a></button></li>
 						</ul>
 					</span>
 				</span>
@@ -166,12 +166,12 @@
 				
 				<ul class="menu-0">
 					<li class="active"><a style="float:left;width:179px;"><span style="padding-left:3%;font-size:15px;float:left;">My Portfolio</span></a><a data-toggle="modal" data-target="#myPortSettings" style="float:right;" class="glyphicons cogwheel single-icon"><i></i></a></li>
-					<li style="height: inherit;">
-						<div class="row-fluid">
-							<span id="myPortfolio">
-							</span>
-						</div>
-					</li>
+					<!-- <li style="height: inherit" > -->
+				
+						<div style="height:370;" id="myPortfolio" class="slim-scroll"  >	
+						
+					</div>	
+					<!-- </li> -->
 				</ul>
 				
 				<!-- <ul class="menu-0">
@@ -304,6 +304,12 @@ z-index:100000;
 }
 </style>
 <script>
+$(function(){
+    $('#myPortfolio').slimScroll({
+        height: '370px'
+    });
+});
+
 $(function() {
 	
 	$("#symSearch")
