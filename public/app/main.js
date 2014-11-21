@@ -1,7 +1,7 @@
 var taskApp = angular.module('chatRoom', ['ngResource', 'ngRoute', 'angularFileUpload', 'cgNotify']);
 
 
-taskApp.controller('ApplicationController', function($scope, $http, notify, $interpolate) {
+taskApp.controller('ApplicationController', function($scope, $http, notify, $interpolate, $timeout) {
 		
 	$scope.getUserPic = function(uId){
 		console.log(uId);
@@ -86,6 +86,64 @@ taskApp.controller('ApplicationController', function($scope, $http, notify, $int
 			});
 	}
 	
+	//Sector----------------------
+	
+	$scope.loadSectors = function(){
+		$scope.allSectors = [];
+		$http.get('/loadSectors',{}
+			).then(function(res){
+				console.log(res.data);
+				$scope.allSectors = res.data;
+				$timeout(function(){
+					$scope.loadBars();
+				},100);
+			}, function(error){
+				
+			});
+	}
+	
+	$scope.loadBars = function(){
+		console.log("here");
+		var port = "";
+		var sp = "";
+		var portWidth = "";
+		var spWidth = "";
+		for(var i=0;i<$scope.allSectors.length;i++){
+			var port = $scope.allSectors[i].name+"port";
+			var sp = $scope.allSectors[i].name+"sp";
+			var portWidth = $scope.allSectors[i].portWeight+"%";
+			var spWidth = $scope.allSectors[i].spWeight+"%";
+			document.getElementById(port).style.width = portWidth;
+			document.getElementById(sp).style.width = spWidth;
+		}
+	}
+	
+	$scope.addSector = function(){
+		$http.post('/addSector',{name:$scope.sector,
+			portWeight:$scope.portWeight,
+			spWeight:$scope.spWeight}
+			).then(function(res){
+				$scope.loadSectors();
+				document.getElementById("sector").value = "";
+				document.getElementById("portWeight").value = "";
+				document.getElementById("spWeight").value = "";
+				notify("Sector added!");
+			}, function(error){
+				
+			});
+	}
+	
+	$scope.deleteSector = function(sector){
+		$http.put('/deleteSector',{id:sector.id}
+			).then(function(res){
+				$scope.loadSectors();
+				notify("Sector deleted!");
+			}, function(error){
+				
+			});
+	}
+	
+	//sector ends------------
 });
 
 taskApp.controller('DashboardController', function($scope, $http, $timeout, notify, $interval) {

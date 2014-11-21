@@ -29,6 +29,10 @@ GET		/loadAllWishlist						controllers.Application.loadAllWishlist()
 PUT 	/removeFromWishlist						controllers.Application.removeFromWishlist()
 POST	/downloadFile						    controllers.Application.downloadFile()
 
+POST	/addSector								controllers.Application.addSector()
+GET		/loadSectors							controllers.Application.loadSectors()
+PUT		/deleteSector							controllers.Application.deleteSector()
+
 POST	/addToPortfolio							controllers.Application.addToPortfolio()
 GET		/loadPortfolio							controllers.Application.loadPortfolio()
 PUT		/updatePortfolio						controllers.Application.updatePortfolio()

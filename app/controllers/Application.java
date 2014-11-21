@@ -28,6 +28,7 @@ import javax.imageio.ImageIO;
 import models.Chat;
 import models.ChatRoom;
 import models.Portfolio;
+import models.Sector;
 import models.User;
 import models.Wishlist;
 
@@ -362,6 +363,27 @@ public class Application extends Controller {
     	Portfolio p = Portfolio.find.byId(Long.parseLong(form.get("id")));
     	p.delete();
     	return ok(Json.toJson(Portfolio.find.all()));
+    }
+    
+    public static Result addSector(){
+    	DynamicForm form = DynamicForm.form().bindFromRequest();
+    	Sector s = new Sector();
+    	s.setName(form.get("name"));
+    	s.setPortWeight(Double.parseDouble(form.get("portWeight")));
+    	s.setSpWeight(Double.parseDouble(form.get("spWeight")));
+    	s.save();
+    	return ok();
+    }
+    
+    public static Result loadSectors(){
+    	return ok(Json.toJson(Sector.find.all()));
+    }
+    
+    public static Result deleteSector(){
+    	DynamicForm form = DynamicForm.form().bindFromRequest();
+    	Sector s = Sector.find.byId(Long.parseLong(form.get("id")));
+    	s.delete();
+    	return ok();
     }
 
 }

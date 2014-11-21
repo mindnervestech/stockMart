@@ -129,12 +129,12 @@
 </head>
 
 	
-<body ng-app="chatRoom" ng-controller="ApplicationController" ng-init="getUserPic(@localUser.id);loadPortfolio()">
+<body ng-app="chatRoom" ng-controller="ApplicationController" ng-init="getUserPic(@localUser.id);loadSectors()">
 
 	<div class="container-fluid fixed menu-left" style="border-bottom: 1px solid #d8d8d8;">
 	
 		<!-- Sidebar menu & content wrapper -->
-		<div id="wrapper" style="height:91%;">
+		<div id="wrapper" class="wrapperClass" style="height:91%;">
 			
 		<!-- Sidebar Menu -->
 		<div id="menu" class="hidden-phone hidden-print">
@@ -164,14 +164,32 @@
 				</span>
 				<!-- // Sidebar Profile END -->
 				
-				<ul class="menu-0">
+<!-- 				<ul class="menu-0">
 					<li class="active"><a style="float:left;width:179px;"><span style="padding-left:3%;font-size:15px;float:left;">My Portfolio</span></a><a data-toggle="modal" data-target="#myPortSettings" style="float:right;" class="glyphicons cogwheel single-icon"><i></i></a></li>
-					<!-- <li style="height: inherit" > -->
-				
-						<div style="height:370;" id="myPortfolio" class="slim-scroll"  >	
-						
+					<div style="height:370;" id="myPortfolio" class="slim-scroll"  >	
 					</div>	
-					<!-- </li> -->
+				</ul> -->
+				
+				<ul class="menu-0">
+					<li class="active"><a style="float:left;width:179px;"><span style="padding-left:3%;font-size:15px;float:left;">Sector Weightings</span></a><a data-toggle="modal" data-target="#sectorSettings" style="float:right;" class="glyphicons cogwheel single-icon"><i></i></a></li>
+					<div style="height:432px;" id="sectorWeight" class="slim-scroll">	
+						<div ng-repeat="sector in allSectors" style="margin-left:1%;">
+						<span style="width:100%;float:left;font-size:15px;font-weight:700;margin-bottom:10px;">{{sector.name}}</span>
+						<div class="progress" style="width:80%;float:left;">
+						   <div class="progress-bar progress-bar-success" id="{{sector.name}}port" role="progressbar" 
+						      aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height:100%;background-color:blue;width:0%;">
+						   </div>
+						</div>
+						<div style="margin-bottom:10px;">{{sector.portWeight}}%</div>
+						<div class="progress" style="width:80%;float:left;">
+						   <div class="progress-bar progress-bar-info" id="{{sector.name}}sp" role="progressbar" 
+						      aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height:100%;background-color:green;width:0%;">
+						   </div>
+						</div>
+						<div style="margin-bottom:10px;">{{sector.spWeight}}%</div>
+						<hr>
+						</div>
+					</div>	
 				</ul>
 				
 				<!-- <ul class="menu-0">
@@ -222,53 +240,53 @@
 <!-- // Themer END -->	
 
 <!-- Modal -->
-<div class="modal hide fade" id="myPortSettings">
+<!-- <div class="modal hide fade" id="myPortSettings">
 	
-	<!-- Modal heading -->
+	Modal heading
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	</div>
-	<!-- // Modal heading END -->
+	// Modal heading END
 	
-	<!-- Modal body -->
+	Modal body
 	<div class="modal-body" style="overflow: hidden;">
 		<div class="widget-body">
-			<!-- Row -->
+			Row
 			<div class="row-fluid">
-				<!-- Column -->
+				Column
 				<div class="span12">
-					<!-- Group -->
+					Group
 					<div class="control-group span5" style="float:left;margin-bottom:0px;">
 						<label class="control-label">Company Name:</label>
 						<div class="controls">
 							<input type="text" id="symSearch" class="span10" />
 						</div>
 					</div>
-					<!-- // Group END -->
+					// Group END
 					
-					<!-- Group -->
+					Group
 					<div class="control-group span5" style="float:left;margin-bottom:0px;">
 						<label class="control-label">No. of Shares:</label>
 						<div class="controls">
 							<input type="text" id="noOfShares" ng-model="noOfShares" class="span10" />
 						</div>
 					</div>
-					<!-- // Group END -->
+					// Group END
 					
-					<!-- Group -->
+					Group
 					<div class="control-group span2" style="float:left;margin-bottom:0px;margin-top:23px;">
 						<div class="controls">
 							<button type="submit" ng-click="addToPortfolio()" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Add</button>
 						</div>
 					</div>
-					<!-- // Group END -->
+					// Group END
 					
 				</div>
 			</div>
 	</div>
-	<!-- // Modal body END -->
+	// Modal body END
 	
-	<!-- Modal footer -->
+	Modal footer
 	<div class="modal-footer">
 		<table class="dynamicTable table table-striped table-bordered table-condensed">
 		
@@ -284,6 +302,90 @@
 					<td>{{company.name}}</td>
 					<td>{{company.noOfShares}}</td>
 					<td><a class="glyphicons delete" ng-click="updatePortfolio(company)"><i></i></a></td>
+				</tr>
+			</tbody>
+		
+		</table>
+	</div>
+	// Modal footer END
+	
+</div> -->
+<!-- // Modal END -->	
+
+<!-- Modal -->
+<div class="modal hide fade" id="sectorSettings">
+	
+	<!-- Modal heading -->
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	</div>
+	<!-- // Modal heading END -->
+	
+	<!-- Modal body -->
+	<div class="modal-body" style="overflow: hidden;">
+		<div class="widget-body">
+			<!-- Row -->
+			<div class="row-fluid">
+				<!-- Column -->
+				<div class="span12">
+					<!-- Group -->
+					<div class="control-group span4" style="float:left;margin-bottom:0px;">
+						<label class="control-label">Sector:</label>
+						<div class="controls">
+							<input type="text" id="sector" ng-model="sector" class="span10" />
+						</div>
+					</div>
+					<!-- // Group END -->
+					
+					<!-- Group -->
+					<div class="control-group span4" style="float:left;margin-bottom:0px;">
+						<label class="control-label">Portfolio weightage %:</label>
+						<div class="controls">
+							<input type="text" id="portWeight" ng-model="portWeight" class="span10" />
+						</div>
+					</div>
+					<!-- // Group END -->
+					
+					<!-- Group -->
+					<div class="control-group span4" style="float:left;margin-bottom:0px;">
+						<label class="control-label">S & P weightage %:</label>
+						<div class="controls">
+							<input type="text" id="spWeight" ng-model="spWeight" class="span10" />
+						</div>
+					</div>
+					<!-- // Group END -->
+					
+					<!-- Group -->
+					<div class="control-group" style="float:left;">
+						<div class="controls">
+							<button type="submit" ng-click="addSector()" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Add</button>
+						</div>
+					</div>
+					<!-- // Group END -->
+					
+				</div>
+			</div>
+	</div>
+	<!-- // Modal body END -->
+	
+	<!-- Modal footer -->
+	<div class="modal-footer">
+		<table class="dynamicTable table table-striped table-bordered table-condensed">
+		
+			<thead>
+				<tr>
+					<th>Sector</th>
+					<th style="width:33%;">Portfolio Weightage %</th>
+					<th style="width:28%;">S & P Weightage %</th>
+					<th style="width:10%;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="sector in allSectors">
+					<td>{{sector.name}}</td>
+					<td>{{sector.portWeight}}</td>
+					<td>{{sector.spWeight}}</td>
+					<td><a class="glyphicons delete" ng-click="deleteSector(sector)"><i></i></a></td>
 				</tr>
 			</tbody>
 		
@@ -307,6 +409,10 @@ z-index:100000;
 $(function(){
     $('#myPortfolio').slimScroll({
         height: '370px'
+    });
+    
+    $('#sectorWeight').slimScroll({
+        height: '432px'
     });
 });
 
