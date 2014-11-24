@@ -41,7 +41,7 @@ public class ChatRoom extends UntypedActor {
     public static void join(final String username, WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) throws Exception{
         System.out.println("join");
         // Send the Join message to the room
-        String result = (String)Await.result(ask(defaultRoom, new Join(username, out, "message", new Date()), 1000), Duration.create(1, SECONDS));
+        String result = (String)Await.result(ask(defaultRoom, new Join(username, out, "message", new Date()), 1000), Duration.create(10, SECONDS));
         System.out.println("result ::: "+result);
         if("OK".equals(result)) {
             
