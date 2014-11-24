@@ -93,11 +93,13 @@ public class ChatRoom extends UntypedActor {
             
             // Check if this username is free.
             if(members.containsKey(join.username)) {
-                getSender().tell("This username is already used");
+                getSender().tell("This username is already used", defaultRoom);
             } else {
                 members.put(User.find.byId(User.findByUsername(join.username)).id.toString(), join.channel);
+                System.out.println("before notifyAll ::::::::::::");
                 notifyAll("join", join.username, "has entered the room", join.type, join.time);
-                getSender().tell("OK");
+                System.out.println("before tell :::::::::::::::::");
+                getSender().tell("OK",defaultRoom);
             }
             
         } else if(message instanceof Talk)  {
