@@ -4,10 +4,12 @@
 
 
 <html lang="en">
-<body class="login" style="background:url('@routes.Assets.at("images/background.jpg")');background-repeat:no-repeat;">
+<body class="login">
+
+<img src="assets/images/background.jpg" style="position: absolute;height: 100%;width: 100%;">
 
 	<!-- Wrapper -->
-<div id="login">
+<div id="login" style="position: absolute;margin-left: 10%;z-index: 10001;">
 
 	<div class="container">
 	
@@ -20,10 +22,10 @@
 				
 				<div class="widget-head">
 					<h3 class="heading">Login area</h3>
-					<div class="pull-right">
+					<!-- <div class="pull-right">
 						Don't have an account? 
 						<a href="@routes.Application.signup" class="btn btn-inverse btn-mini">Sign up</a>
-					</div>
+					</div> -->
 				</div>
 				<div class="widget-body">
 					@if(flash.contains("error")) {
