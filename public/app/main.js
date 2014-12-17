@@ -1,5 +1,34 @@
 var taskApp = angular.module('chatRoom', ['ngResource', 'ngRoute', 'angularFileUpload', 'cgNotify']);
 
+taskApp.run(function($rootScope,$http,$location) {
+    // you can inject any instance here
+    $rootScope.getUserType = function () {
+    	$http.get('/getUserType', {}
+        	).then(function (res) {
+                $rootScope.isAdmin = res.data;
+                if (res.data == "false") {
+                	if($location.url() == "/manageUsers"){
+                		$location.path('/');
+                	}
+                }
+            }, function (error) {
+
+            });
+    }
+    
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+    	$rootScope.getUserType();
+		/*console.log($location.url());
+        if (!$rootScope.isAdmin) {
+        	if($location.url() == "/manageUsers"){
+        		console.log("will redirect");
+        		$location.path('/');
+        	}
+        }*/
+    });
+    
+});
+
 
 taskApp.controller('ApplicationController', function($scope, $http, notify, $interpolate, $timeout) {
 		
@@ -86,6 +115,7 @@ taskApp.controller('ApplicationController', function($scope, $http, notify, $int
 			});
 	}
 	
+	
 	//Sector----------------------
 	
 	$scope.loadSectors = function(){
@@ -103,7 +133,6 @@ taskApp.controller('ApplicationController', function($scope, $http, notify, $int
 	}
 	
 	$scope.loadBars = function(){
-		console.log("here");
 		var port = "";
 		var sp = "";
 		var portWidth = "";
@@ -368,6 +397,69 @@ taskApp.controller('ChangePasswordController', function($scope, $http, notify) {
 			}, function(error){
 				
 			});
+	}
+	
+});
+
+taskApp.controller('UserController', function($scope, $http, notify) {
+	
+	$scope.selectedTab = 3;
+	
+	/*$('#usersList').slimScroll({
+        height: '432px'
+    });*/
+
+	$scope.getAllUsers = function(){
+		$scope.allUsers = [];
+		$http.get('/getAllUsers',{}
+			).then(function(res){
+				$scope.allUsers = res.data;
+			}, function(error){
+				
+			});
+	}
+	
+	$scope.deleteUser = function(user){
+		$http.put('/deleteUser',{id:user.id}
+			).then(function(res){
+				notify("User successfully deleted!");
+				$scope.getAllUsers();
+			}, function(error){
+				
+			});
+	}
+	
+	$scope.user = {};
+	
+	$scope.createNewUser = function(){
+		console.log($scope.user);
+		$http.post('/createNewUser',{user:$scope.user}
+			).then(function(res){
+				notify("User successfully created!");
+				$('#newUser').modal('hide');
+				$scope.getAllUsers();
+			}, function(error){
+				
+			});
+	}
+	
+	$scope.editUser = function(user){
+		$scope.user = user;
+		$scope.user.confEmail = user.email;
+		$scope.user.confPassword = user.password;
+		$('#editUser').modal('show');
+	}
+	
+	$scope.updateUser = function(){
+		console.log($scope.user);
+		$http.put('/updateUser',{user:$scope.user}
+		).then(function(res){
+			notify("User information successfully updated!");
+			$('#editUser').modal('hide');
+			$scope.getAllUsers();
+		}, function(error){
+			
+		});
 	}
 	
 });

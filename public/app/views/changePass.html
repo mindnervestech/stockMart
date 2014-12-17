@@ -3,13 +3,14 @@
 	<img style="width:32%;" src="/assets/images/c_logo.png">
 
 	<!-- Widget -->
-	<div class="widget widget-tabs border-bottom-none">
+	<div class="widget widget-tabs border-bottom-none" style="height:85%;">
 		
 		<!-- Widget heading -->
 		<div class="widget-head">
 			<ul>
 				<li ng-class="selectedTab == 1? 'active' : ''"><a href="#/myAccount">Proflie Picture</a></li>
 				<li ng-class="selectedTab == 2? 'active' : ''"><a href="#/changePass">Change Password</a></li>
+				<li ng-show="isAdmin" ng-class="selectedTab == 3? 'active' : ''"><a href="#/manageUsers">Manage Users</a></li>
 			</ul>
 		</div>
 		<!-- // Widget heading END -->

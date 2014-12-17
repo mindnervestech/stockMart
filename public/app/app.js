@@ -8,9 +8,13 @@ taskApp.config(function ($routeProvider) {
             templateUrl: '/assets/app/views/myAccount.html',
             controller: 'MyAccountController'
         })
-        .when('/changePass/', {
+        .when('/changePass', {
             templateUrl: '/assets/app/views/changePass.html',
             controller: 'ChangePasswordController'
+        })
+        .when('/manageUsers', {
+            templateUrl: '/assets/app/views/manageUsers.html',
+            controller: 'UserController'
         })
 
 });

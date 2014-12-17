@@ -1,0 +1,153 @@
+<div id="content1" class="innerLR">
+
+	<img style="width:32%;" src="/assets/images/c_logo.png">
+
+	<!-- Widget -->
+	<div class="widget widget-tabs border-bottom-none" style="height:85%;" ng-init="getAllUsers()">
+		
+		<!-- Widget heading -->
+		<div class="widget-head">
+			<ul>
+				<li ng-class="selectedTab == 1? 'active' : ''"><a href="#/myAccount">Proflie Picture</a></li>
+				<li ng-class="selectedTab == 2? 'active' : ''"><a href="#/changePass">Change Password</a></li>
+				<li ng-show="isAdmin" ng-class="selectedTab == 3? 'active' : ''"><a href="#/manageUsers">Manage Users</a></li>
+			</ul>
+		</div>
+		<!-- // Widget heading END -->
+			
+		<div class="widget-body" id="usersList" class="slim-scroll">
+			
+			<a style="margin-bottom: 1%;float: right;" data-toggle="modal" data-target="#newUser" class="btn btn-icon btn-primary">Create New User</a>
+
+			<table class="dynamicTable table table-striped table-bordered table-condensed">
+		
+				<thead>
+					<tr>
+						<th>User Name</th>
+						<th style="width:10%;"></th>
+						<th style="width:10%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in allUsers">
+						<td>{{user.name}}</td>
+						<td><a style="margin-top:-5%;" class="glyphicons no-js edit" ng-click="editUser(user)"><i></i></a></td>
+						<td><a class="glyphicons delete" ng-click="deleteUser(user)"><i></i></a></td>
+					</tr>
+				</tbody>
+		
+			</table>
+			
+		</div>	
+	
+	</div>
+			
+</div>
+
+<!-- Modal -->
+<div class="modal hide fade" id="newUser">
+	
+	<!-- Modal heading -->
+	<div class="modal-header">
+		<label style="margin-top:2%;" class="strong">Create User</label>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	</div>
+	<!-- // Modal heading END -->
+	
+	<!-- Modal body -->
+	<div class="modal-body" style="overflow: hidden;">
+		<div class="widget-body">
+			<!-- Row -->
+			<div class="row-fluid row-merge">
+				<!-- Column -->
+				<div class="span6">
+					<div class="innerR">
+						<label class="strong">Username</label>
+						<input type="text" name="name" ng-model="user.name" class="input-block-level" placeholder="Your Username"/>
+						<label class="strong">Password</label>
+						<input type="password" name="pwd" ng-model="user.password" class="input-block-level" placeholder="Your Password"/>
+						<label class="strong">Confirm Password</label>
+						<input type="password" name="confPwd" ng-model="user.confPassword" class="input-block-level" placeholder="Confirm Password"/>
+					</div>
+				</div>
+				<!-- // Column END -->
+				<!-- Column -->
+				<div class="span6">
+					<div class="innerL">
+						<label class="strong">Email</label>
+						<input type="text" name="email" ng-model="user.email" class="input-block-level" placeholder="Your Email Address"/>
+						<label class="strong">Confirm Email</label>
+						<input type="text" name="confEmail" ng-model="user.confEmail" class="input-block-level" placeholder="Confirm Your Email Address"/>
+					</div>
+				</div>
+				<!-- // Column END -->
+			</div>
+			<!-- // Row END -->
+		</div>
+	</div>
+	<!-- // Modal body END -->
+	
+	<!-- Modal footer -->
+	<div class="modal-footer">
+		<button type="submit" ng-click="createNewUser()" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Create</button>
+	</div>
+	<!-- // Modal footer END -->
+	
+</div>
+<!-- // Modal END -->	
+
+
+<!-- Modal -->
+<div class="modal hide fade" id="editUser">
+	
+	<!-- Modal heading -->
+	<div class="modal-header">
+	<label style="margin-top:2%;" class="strong">Edit User</label>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	</div>
+	<!-- // Modal heading END -->
+	
+	<!-- Modal body -->
+	<div class="modal-body" style="overflow: hidden;">
+			<div class="widget-body">
+			<!-- Row -->
+			<div class="row-fluid row-merge">
+				<!-- Column -->
+				<div class="span6">
+					<div class="innerR">
+						<label class="strong">Username</label>
+						<input type="text" name="name" ng-model="user.name" class="input-block-level" placeholder="Your Username"/>
+						<label class="strong">Password</label>
+						<input type="password" name="pwd" ng-model="user.password" class="input-block-level" placeholder="Your Password"/>
+						<label class="strong">Confirm Password</label>
+						<input type="password" name="confPwd" ng-model="user.confPassword" class="input-block-level" placeholder="Confirm Password"/>
+					</div>
+				</div>
+				<!-- // Column END -->
+				<!-- Column -->
+				<div class="span6">
+					<div class="innerL">
+						<label class="strong">Email</label>
+						<input type="text" name="email" ng-model="user.email" class="input-block-level" placeholder="Your Email Address"/>
+						<label class="strong">Confirm Email</label>
+						<input type="text" name="confEmail" ng-model="user.confEmail" class="input-block-level" placeholder="Confirm Your Email Address"/>
+					</div>
+				</div>
+				<!-- // Column END -->
+			</div>
+			<!-- // Row END -->
+		</div>
+	</div>
+	<!-- // Modal body END -->
+	
+	<!-- Modal footer -->
+	<div class="modal-footer">
+		<button type="submit" ng-click="updateUser()" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i>Save</button>
+	</div>
+	<!-- // Modal footer END -->
+	
+</div>
+<!-- // Modal END -->	
+
+	
+	

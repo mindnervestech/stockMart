@@ -385,5 +385,50 @@ public class Application extends Controller {
     	s.delete();
     	return ok();
     }
+    
+    public static Result getAllUsers(){
+    	List<User> allUsers = User.getAllUsersNotAdmin();
+    	return ok(Json.toJson(allUsers));
+    }
+    
+    public static Result deleteUser(){
+    	DynamicForm form = DynamicForm.form().bindFromRequest();
+    	User u = User.find.byId(Long.parseLong(form.get("id")));
+    	u.delete();
+    	return ok();
+    }
+    
+    public static Result createNewUser(){
+    	JsonNode json = request().body().asJson();
+        JsonNode node = json.path("user");
+        User u = new User();
+        u.setName(node.path("name").asText());
+        u.setEmail(node.path("email").asText());
+        u.setPassword(node.path("password").asText());
+        u.save();
+    	return ok();
+    }
+    
+    public static Result updateUser(){
+    	JsonNode json = request().body().asJson();
+        JsonNode node = json.path("user");
+        User u = User.find.byId(node.path("id").asLong());
+        if(node.path("name").asText() != null){
+        	u.setName(node.path("name").asText());
+        }
+        if(node.path("email").asText() != null){
+        	u.setEmail(node.path("email").asText());
+        }
+        if(node.path("password").asText() != null){
+        	u.setPassword(node.path("password").asText());
+        }
+        u.update();
+    	return ok();
+    }
+    
+    public static Result getUserType(){
+    	User user = Application.getLocalUser(session());
+    	return ok(Json.toJson(user.isAdmin()));
+    }
 
 }

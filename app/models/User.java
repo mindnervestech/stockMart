@@ -33,9 +33,28 @@ public class User extends Model{
     
     public String uId;
     
-    @Lob
+    public Boolean isAdmin = false;
+    
+    
+	@Lob
     public String userPic;
     
+	public boolean isAdmin() {
+		if(isAdmin == null){
+			return false;
+		}
+		return isAdmin;
+	}
+
+
+	public void setAdmin(Boolean isAdmin) {
+		if(isAdmin == null){
+			isAdmin = false;
+		}
+		this.isAdmin = isAdmin;
+	}
+
+	
 	public String getStatus() {
 		return status;
 	}
@@ -118,6 +137,20 @@ public class User extends Model{
 
 	public void setUserPic(String imageDataString) {
 		this.userPic = imageDataString;
+	}
+
+
+	public static List<User> getAllUsersNotAdmin() {
+		List<User> list =  find.all();
+		List<User> allUsers = new ArrayList<>();
+		if(list != null){
+			for(User u:list){
+				if(!u.isAdmin()){
+					allUsers.add(u);
+				}
+			}	
+		}
+		return allUsers;
 	}
 
 }
