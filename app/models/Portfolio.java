@@ -5,9 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import play.db.ebean.Model;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Portfolio extends Model {
 	
 	@Id

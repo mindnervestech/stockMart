@@ -9,12 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 
 import play.db.ebean.Model;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Chat extends Model {
 
 	@Id

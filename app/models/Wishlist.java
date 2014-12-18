@@ -5,11 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import play.data.DynamicForm;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Wishlist extends Model {
 	
 	@Id

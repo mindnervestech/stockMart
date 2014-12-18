@@ -11,12 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import play.data.DynamicForm;
 import play.db.ebean.Model;
 
 import com.avaje.ebean.ExpressionList;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends Model{
 	
 	@Id
